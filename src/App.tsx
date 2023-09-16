@@ -1,56 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useEffect } from "react";
+import "./App.css";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import MainPage from "./app/pages/main";
+import UserPage from "./app/pages/user";
+import HeaderComponent from "./app/components/header";
+import ReviewPage from "./app/pages/review";
+import { Container, ThemeProvider } from "@mui/material";
+import CompositionPage from "./app/pages/composition";
+import { theme } from "./app/themes/theme";
+
+import "./app/translation";
+import { getUserData } from "./app/store/core-reducer";
+import { useAppDispatch } from "./app/hooks";
+import AdminPage from "./app/pages/admin";
+import { ReviewsPage } from "./app/pages/reviews/reviews";
+import SearchPage from "./app/pages/search";
+import CompositionsPage from "./app/pages/compositions";
+import NoPage from "./app/pages/404";
+
+const router = createBrowserRouter([
+  { path: "/", element: <MainPage /> },
+  { path: "/users/:id", element: <UserPage /> },
+  { path: "/reviews", element: <ReviewsPage /> },
+  { path: "/reviews/:id", element: <ReviewPage /> },
+  { path: "/compositions/:id", element: <CompositionPage /> },
+  { path: "/admin", element: <AdminPage /> },
+  { path: "/search", element: <SearchPage /> },
+  { path: "/compositions", element: <CompositionsPage /> },
+  { path: "*", element: <NoPage /> },
+]);
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      <RouterProvider router={router} />
     </div>
   );
 }

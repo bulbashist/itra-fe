@@ -1,0 +1,31 @@
+{
+  "translation": {
+    "word_rating": "Рейтинг",
+
+    "header_project_name": "Финальный проект",
+    "header_search_placeholder": "Поиск по сайту",
+    "header_nav_reviews": "Отзывы",
+    "header_nav_compositions": "произведения",
+    "header_ru_lang": "Русский",
+    "header_en_lang": "Английский",
+
+    "login_button": "Войти",
+    "login_profile": "Профиль",
+    "login_signout": "Выйти",
+    "login_popup_email": "Почта",
+    "login_popup_password": "Пароль",
+    "login_popup_socials": "Войти через соцсети:",
+    "login_popup_google": "Войти с помощью Google",
+    "login_popup_github": "Войти с помощью Github",
+    "login_popup_signin": "Зарегистрироваться",
+
+    "main_popular": "Популярные",
+    "main_newest": "Новые",
+
+    "reviews_rating": "Рейтинг",
+
+    "user_reviews_table_review": "Отзыв",
+    "user_reviews_table_composition": "Произведение",
+    "user_reviews_table_avg_rating": "Средний рейтинг"
+  }
+}

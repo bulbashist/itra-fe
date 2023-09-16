@@ -1,0 +1,31 @@
+{
+  "translation": {
+    "word_rating": "Rating",
+
+    "header_project_name": "Final Project",
+    "header_nav_reviews": "Reviews",
+    "header_nav_compositions": "Compositions",
+    "header_search_placeholder": "Site search",
+    "header_ru_lang": "Russian",
+    "header_en_lang": "English",
+
+    "login_button": "Log in",
+    "login_profile": "Profile",
+    "login_signout": "Sign out",
+    "login_popup_email": "Email",
+    "login_popup_password": "Password",
+    "login_popup_socials": "Login via socials:",
+    "login_popup_google": "Log in with Google",
+    "login_popup_github": "Log in with Github",
+    "login_popup_signin": "Sign in",
+
+    "main_popular": "Popular",
+    "main_newest": "Newest",
+
+    "reviews_rating": "Rating",
+
+    "user_reviews_table_review": "Review title",
+    "user_reviews_table_composition": "Composition name",
+    "user_reviews_table_avg_rating": "Average Rating"
+  }
+}
