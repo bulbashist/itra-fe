@@ -5,7 +5,8 @@
     "header_project_name": "Финальный проект",
     "header_search_placeholder": "Поиск по сайту",
     "header_nav_reviews": "Отзывы",
-    "header_nav_compositions": "произведения",
+    "header_nav_compositions": "Произведения",
+    "header_nav_admin": "Пользователи",
     "header_ru_lang": "Русский",
     "header_en_lang": "Английский",
 
@@ -23,6 +24,13 @@
     "main_newest": "Новые",
 
     "reviews_rating": "Рейтинг",
+
+    "admin_login": "Логин",
+    "admin_name": "Имя",
+    "admin_block_state": "Заблокировать",
+    "admin_admin_state": "Сделать администратором",
+    "admin_delete": "Удалить",
+    "admin_admin": "Админ",
 
     "user_reviews_table_review": "Отзыв",
     "user_reviews_table_composition": "Произведение",

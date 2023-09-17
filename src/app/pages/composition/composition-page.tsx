@@ -3,9 +3,7 @@ import { useParams } from "react-router";
 import { useAppDispatch } from "../../hooks";
 import { getComposition } from "./store/slice";
 import CompositionBlockComponent from "./components/composition-block";
-import HeaderComponent from "../../components/header";
 import ReviewFormComponent from "./components/review-form";
-import { Container } from "@mui/system";
 import { useState } from "react";
 import PageWrapperComponent from "../../components/page-wrapper";
 

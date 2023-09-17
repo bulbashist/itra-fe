@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const TagsPanelComponent = ({ tags, setTags }: Props) => {
-  const compTag = useAppSelector((state) => state.composition.tag);
+  const composition = useAppSelector((state) => state.composition);
 
   const [hints, setHints] = useState<ITag[]>([]);
 
@@ -28,10 +28,15 @@ export const TagsPanelComponent = ({ tags, setTags }: Props) => {
       .catch(console.error);
   }, []);
 
+  if (!composition) return null;
+
   const tagSelectionHandler = (_: unknown, value: string | null) => {
     if (value) {
       const hint = hints.find((hint) => hint.name === value)!;
-      if (hint.id !== compTag.id && !tags.find((tag) => tag.id === hint.id)) {
+      if (
+        hint.id !== composition.tag.id &&
+        !tags.find((tag) => tag.id === hint.id)
+      ) {
         setTags((ps) => [...ps, hint]);
       }
     }
@@ -45,8 +50,10 @@ export const TagsPanelComponent = ({ tags, setTags }: Props) => {
       alignItems="center"
     >
       <Stack direction="row" gap={CSSGap.Small} flexWrap="wrap">
-        <Button variant="outlined" color="warning" key={compTag.id}>
-          <Typography marginRight={CSSMargin.Tiny}>{compTag.name}</Typography>
+        <Button variant="outlined" color="warning" key={composition.tag.id}>
+          <Typography marginRight={CSSMargin.Tiny}>
+            {composition.tag.name}
+          </Typography>
         </Button>
         {tags.map((tag) => (
           <Button variant="outlined" color="warning" key={tag.id}>

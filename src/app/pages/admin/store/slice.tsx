@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { IUser } from "../../../types";
 import { ChangeIUserDTO } from "../types";
+import { usersURL } from "../../../constants/urls";
 
 type ThunkArgs = {
   id: number;
@@ -9,19 +10,24 @@ type ThunkArgs = {
 };
 
 const getUsers = createAsyncThunk("get-users", async () => {
-  const url = process.env.REACT_APP_SERVER + "/api/users/";
-  const response = await axios.get(url);
+  const response = await axios.get(usersURL, { withCredentials: true });
   return response.data;
 });
 
 const changeUser = createAsyncThunk(
   "change-user",
   async ({ id, dto }: ThunkArgs) => {
-    const url = process.env.REACT_APP_SERVER + "/api/users/" + id;
-    const response = await axios.patch(url, dto);
+    const response = await axios.patch(usersURL + id, dto, {
+      withCredentials: true,
+    });
     return response.data;
   }
 );
+
+const deleteUser = createAsyncThunk("delete-user", async (id: number) => {
+  await axios.delete(usersURL + id, { withCredentials: true });
+  return id;
+});
 
 const slice = createSlice({
   name: "admin",
@@ -36,8 +42,11 @@ const slice = createSlice({
             return { ...user, ...action.payload };
           } else return user;
         });
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        return state.filter((user) => user.id !== action.payload);
       }),
 });
 
-export { getUsers, changeUser };
+export { getUsers, changeUser, deleteUser };
 export default slice.reducer;

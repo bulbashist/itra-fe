@@ -9,7 +9,12 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { logInURL, signUpURL } from "../../../../constants/urls";
+import {
+  githubUrl,
+  googleUrl,
+  logInURL,
+  signUpURL,
+} from "../../../../constants/urls";
 import { useState } from "react";
 import { useAppDispatch } from "../../../../hooks";
 import { getUserData } from "../../../../store/core-reducer";
@@ -60,7 +65,7 @@ export const AuthModalComponent = ({ isOpen, closeModal }: Props) => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t("login_popup_password")}
           />
-          <Button onClick={logIn}>Log in</Button>
+          <Button onClick={logIn}>{t("login_button")}</Button>
           <Container sx={{ margin: 0, padding: 2 }}>
             <Stack alignItems="center" sx={{}} spacing={1}>
               <Typography variant="subtitle2">
@@ -70,8 +75,7 @@ export const AuthModalComponent = ({ isOpen, closeModal }: Props) => {
                 variant="outlined"
                 fullWidth={true}
                 onClick={() => {
-                  window.location.href =
-                    "http://localhost:4000/auth/login-google";
+                  window.location.href = googleUrl;
                 }}
               >
                 {t("login_popup_google")}
@@ -80,8 +84,7 @@ export const AuthModalComponent = ({ isOpen, closeModal }: Props) => {
                 variant="outlined"
                 fullWidth={true}
                 onClick={() => {
-                  window.location.href =
-                    "http://localhost:4000/auth/login-github";
+                  window.location.href = githubUrl;
                 }}
               >
                 {t("login_popup_github")}

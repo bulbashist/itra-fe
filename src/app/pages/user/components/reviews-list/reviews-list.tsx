@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useTranslation } from "react-i18next";
 import { Rating } from "@mui/material";
+import { Rating10 } from "../../../../components/rating";
 
 export const ReviewsListComponent = () => {
   const reviews = useAppSelector((state) => state.user?.reviews);
@@ -48,7 +49,7 @@ export const ReviewsListComponent = () => {
       align: "center",
 
       renderCell: (params) => (
-        <Rating value={params.row.avgRating / 2} precision={0.5} readOnly />
+        <Rating10 value={params.row.avgRating} readOnly />
       ),
     },
   ];

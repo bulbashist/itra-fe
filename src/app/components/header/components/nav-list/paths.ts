@@ -8,3 +8,10 @@ export const paths = [
     url: "/compositions",
   },
 ];
+
+export const protectedPaths = [
+  {
+    title: "header_nav_admin",
+    url: "/admin",
+  },
+];

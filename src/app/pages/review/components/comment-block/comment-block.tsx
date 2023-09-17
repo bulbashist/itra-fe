@@ -18,6 +18,7 @@ import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { useAppSelector } from "../../../../hooks";
 import CommentInputComponent from "./components/input";
+import { Link } from "react-router-dom";
 
 type Props = {
   comments: IComment[];
@@ -36,7 +37,7 @@ export const CommentBlockComponent = ({ comments }: Props) => {
   }, []);
 
   return (
-    <Box padding="20px 50px">
+    <Box padding="20px 20px">
       <Typography align="left" borderBottom={1}>
         Комментарии
       </Typography>
@@ -54,7 +55,7 @@ export const CommentBlockComponent = ({ comments }: Props) => {
                 </Typography>
               </List>
             </ListItem>
-            <Typography align="left" sx={{ marginLeft: 9 }}>
+            <Typography align="left" sx={{ marginLeft: CSSMargin.Large }}>
               {comment.text}
             </Typography>
             {userId === comment.author.id || isAdmin ? (

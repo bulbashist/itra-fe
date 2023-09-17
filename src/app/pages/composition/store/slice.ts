@@ -4,22 +4,9 @@ import axios from "axios";
 import { compositionsURL, reviewsURL } from "../../../constants/urls";
 import { CreateReviewDto } from "../types";
 
-type InitialState = IComposition | null;
+type State = IComposition | null;
 
-const initialState: InitialState = {
-  author: "vbtrnryn",
-  description:
-    "# Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-  id: 1,
-  name: "brtntynmyumyu",
-  avgRating: 4,
-  userRating: 2,
-  tag: {
-    id: 1,
-    name: "adfda",
-  },
-  reviews: [],
-};
+const initialState: State = null;
 
 const getComposition = createAsyncThunk(
   "getComposition",
@@ -43,13 +30,29 @@ const uploadReview = createAsyncThunk(
   }
 );
 
-const slice = createSlice({
+const changeRating = createAsyncThunk(
+  "change-comp-rating",
+  async ({ id, score }: { id: number; score: number }) => {
+    await axios.patch(
+      compositionsURL + id,
+      { score },
+      { withCredentials: true }
+    );
+    return score;
+  }
+);
+
+const slice = createSlice<State, any, any>({
   name: "composition-page-store",
   initialState,
   reducers: {},
   extraReducers: (builder) =>
-    builder.addCase(getComposition.fulfilled, (_, action) => action.payload),
+    builder
+      .addCase(getComposition.fulfilled, (_, action) => action.payload)
+      .addCase(changeRating.fulfilled, (state, action) => {
+        state!.userRating = action.payload;
+      }),
 });
 
-export { getComposition, uploadReview };
+export { getComposition, uploadReview, changeRating };
 export default slice.reducer;

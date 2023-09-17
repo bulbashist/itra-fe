@@ -5,6 +5,7 @@
     "header_project_name": "Final Project",
     "header_nav_reviews": "Reviews",
     "header_nav_compositions": "Compositions",
+    "header_nav_admin": "Users",
     "header_search_placeholder": "Site search",
     "header_ru_lang": "Russian",
     "header_en_lang": "English",
@@ -23,6 +24,13 @@
     "main_newest": "Newest",
 
     "reviews_rating": "Rating",
+
+    "admin_login": "Login",
+    "admin_name": "Name",
+    "admin_block_state": "Block state",
+    "admin_admin_state": "Admin state",
+    "admin_delete": "Delete",
+    "admin_admin": "Admin",
 
     "user_reviews_table_review": "Review title",
     "user_reviews_table_composition": "Composition name",

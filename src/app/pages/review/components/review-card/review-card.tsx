@@ -1,7 +1,9 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
+  Grid,
   List,
   ListItem,
   Rating,
@@ -20,10 +22,9 @@ import { IReview } from "../../../../types";
 import { CSSGap, CSSMargin, CSSPadding } from "../../../../styles/constants";
 import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import { deleteReview, setEditingState } from "../../store/slice";
-import ReviewRatingComponent from "../../../../components/review-rating";
 import { Link, useNavigate } from "react-router-dom";
 import { changeLike, changeRating } from "../../store/reviews/thunks";
-import { useEffect, useRef } from "react";
+import { Rating10 } from "../../../../components/rating";
 
 type Props = {
   review: IReview | any;
@@ -79,7 +80,9 @@ export const ReviewCardComponent = ({ review }: Props) => {
           </Box>
         ) : null}
       </Stack>
-      <ReactMarkdown>{review.text}</ReactMarkdown>
+      <Box style={{ overflowX: "scroll" }}>
+        <ReactMarkdown>{review.text}</ReactMarkdown>
+      </Box>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Box>
           <Stack direction="row" gap={CSSGap.Tiny / 2}>
@@ -87,20 +90,22 @@ export const ReviewCardComponent = ({ review }: Props) => {
             <Typography>{review.author.name}</Typography>
           </Stack>
           <Stack direction="row" gap={CSSGap.Tiny / 2}>
-            <Typography color="GrayText">Произведение:</Typography>
-            <Typography>{review.compositionName}</Typography>
+            <Typography color="GrayText" textAlign="left">
+              Произведение:
+            </Typography>
+            <Typography textAlign="left">{review.compositionName}</Typography>
           </Stack>
         </Box>
         <Stack direction="column" gap={CSSGap.Tiny / 2} alignItems="end">
           <Typography>Рейтинг:</Typography>
-          <Rating value={review.avgRating / 2} precision={0.5} readOnly />
+          <Rating10 value={review.avgRating} readOnly={true} />
         </Stack>
       </Stack>
       {userId ? (
         <List sx={{ marginTop: CSSMargin.Small }}>
           <Typography variant="h5">Оцените отзыв:</Typography>
-          <Rating
-            value={review.userRating / 2}
+          <Rating10
+            value={review.userRating}
             onChange={(_, value) => {
               if (value) {
                 dispatch(

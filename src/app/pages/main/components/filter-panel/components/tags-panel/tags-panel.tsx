@@ -55,8 +55,10 @@ export const TagsPanelComponent = () => {
           color="warning"
           sx={{ margin: CSSMargin.Tiny }}
         >
-          <Typography marginRight={1}>{currTag.name}</Typography>
-          <Cancel onClick={() => dispatch(deleteTag(currTag.id))} />
+          <Stack direction="row" flexWrap="wrap">
+            <Typography marginRight={CSSMargin.Tiny}>{currTag.name}</Typography>
+            <Cancel onClick={() => dispatch(deleteTag(currTag.id))} />
+          </Stack>
         </Button>
       ) : null}
     </Box>

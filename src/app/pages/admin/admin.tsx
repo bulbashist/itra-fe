@@ -1,20 +1,25 @@
-import { Slider, Table } from "@mui/material";
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import axios from "axios";
 import { t } from "i18next";
-import { useState, useEffect } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { useEffect } from "react";
 import { IUser } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { changeUser, getUsers } from "./store/slice";
+import { deleteUser, getUsers } from "./store/slice";
 import NoPage from "../404";
 import PageWrapperComponent from "../../components/page-wrapper";
-import { CSSMargin } from "../../styles/constants";
-
-const columns: GridColDef<never>[] = [
-  { field: "id" },
-  { field: "name" },
-  { field: "login" },
-];
+import { CSSPadding } from "../../styles/constants";
+import DeleteForever from "@mui/icons-material/DeleteForever";
+import AdminCellComponent from "./components/admin-cell";
+import { Link } from "react-router-dom";
+import BlockCellComponent from "./components/block-cell";
 
 export const AdminPage = () => {
   const isAdmin = useAppSelector((state) => state.core.isAdmin);
@@ -31,58 +36,45 @@ export const AdminPage = () => {
 
   return (
     <PageWrapperComponent>
-      <Table border={1}>
-        <thead>
-          <th>id</th>
-          <th>login</th>
-          <th>name</th>
-          <th>block</th>
-          <th>admin</th>
-        </thead>
-        <tbody>
-          {users.map((user: IUser) => (
-            <tr>
-              <td>{user.id}</td>
-              <td>{user.login}</td>
-              <td>{user.name}</td>
+      <Box padding={CSSPadding.Decent}>
+        <Table border={1} cellSpacing={20}>
+          <TableHead>
+            <th>id</th>
+            <th>{t("admin_login")}</th>
+            <th>{t("admin_name")}</th>
+            <th>{t("admin_block_state")}</th>
+            <th>{t("admin_admin_state")}</th>
+            <th>{t("admin_delete")}</th>
+          </TableHead>
+          <TableBody>
+            {users.map((user: IUser) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>
+                  <Link to={`/users/${user.id}`}>{user.login}</Link>
+                </TableCell>
+                <TableCell>{user.name}</TableCell>
 
-              <td>
-                <Slider
-                  min={0}
-                  max={1}
-                  value={Number(user.isBlocked)}
-                  onChange={(_, value) => {
-                    dispatch(
-                      changeUser({
-                        id: user.id,
-                        dto: {
-                          isBlocked: Boolean(value),
-                        },
-                      })
-                    );
-                  }}
-                />
-              </td>
-              <td>
-                <Slider
-                  min={0}
-                  max={1}
-                  value={Number(user.isAdmin)}
-                  onChange={(_, value) => {
-                    dispatch(
-                      changeUser({
-                        id: user.id,
-                        dto: { isAdmin: Boolean(value) },
-                      })
-                    );
-                  }}
-                />
-                {/* dispatch to server */}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+                <TableCell>
+                  <BlockCellComponent user={user} />
+                </TableCell>
+                <TableCell>
+                  <AdminCellComponent user={user} />
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => dispatch(deleteUser(user.id))}
+                  >
+                    <DeleteForever />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
     </PageWrapperComponent>
   );
 };

@@ -15,6 +15,8 @@ import { useNavigate } from "react-router";
 import TagButtonComponent from "../../../../components/tag-button";
 import { CSSGap, CSSMargin, CSSPadding } from "../../../../styles/constants";
 import { reviewsURL } from "../../../../constants/urls";
+import { Rating10 } from "../../../../components/rating";
+import ReviewImgCard from "../../../../components/review-img-card";
 
 export const ReviewsListComponent = () => {
   const filter = useAppSelector((state) => state.main.filter);
@@ -62,54 +64,7 @@ export const ReviewsListComponent = () => {
         sx={{ gap: CSSGap.Small, display: "flex", flexDirection: "column" }}
       >
         {reviews.map((review) => (
-          <li key={review.id}>
-            <Card
-              variant="outlined"
-              sx={{
-                backgroundColor: "#dddddd",
-                paddingX: CSSPadding.Large,
-                paddingY: CSSPadding.Average,
-                cursor: "pointer",
-              }}
-              onClick={() => navigate(`/reviews/${review.id}`)}
-            >
-              <Stack gap={CSSGap.Small}>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  flexWrap="wrap"
-                >
-                  <Typography variant="h4" align="left">
-                    {review.title}
-                  </Typography>
-                  <Rating
-                    value={review.avgRating}
-                    readOnly={true}
-                    precision={0.5}
-                  ></Rating>
-                </Stack>
-                <img
-                  src={review.previewImg}
-                  alt=""
-                  height="200px"
-                  style={{ width: "100%" }}
-                />
-                <Grid container justifyContent="space-between">
-                  <p>{new Date(review.date).toLocaleString()}</p>
-                  <Stack
-                    direction="row"
-                    sx={{ float: "right" }}
-                    gap={CSSGap.Tiny}
-                  >
-                    {review.tags.map((tag) => (
-                      <TagButtonComponent tag={tag} key={tag.id} />
-                    ))}
-                  </Stack>
-                </Grid>
-              </Stack>
-            </Card>
-          </li>
+          <ReviewImgCard key={review.id} review={review} />
         ))}
       </List>
       <Pagination

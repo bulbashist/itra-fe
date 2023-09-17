@@ -24,7 +24,7 @@ type Props = {
 };
 
 export const ReviewFormComponent = ({ closeModal }: Props) => {
-  const { id } = useAppSelector((state) => state.composition);
+  const composition = useAppSelector((state) => state.composition);
 
   const [previewImg, setPreviewImg] = useState("");
   const [tags, setTags] = useState<ITag[]>([]);
@@ -34,6 +34,8 @@ export const ReviewFormComponent = ({ closeModal }: Props) => {
   const dispatch = useAppDispatch();
 
   const imgServer = useRef(new ImageServer());
+
+  if (!composition) return null;
 
   const handleChange = async (f: File) => {
     const url = await imgServer.current.uploadImage(f);
@@ -47,7 +49,14 @@ export const ReviewFormComponent = ({ closeModal }: Props) => {
   };
 
   const formHandler = (data: FormData) => {
-    dispatch(uploadReview({ composition: { id }, ...data, previewImg, tags }));
+    dispatch(
+      uploadReview({
+        composition: { id: composition.id },
+        ...data,
+        previewImg,
+        tags,
+      })
+    );
     closeModal();
   };
 

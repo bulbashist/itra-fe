@@ -1,8 +1,5 @@
-import Card from "@mui/material/Card";
-import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 
-import HeaderComponent from "../../components/header";
 import FilterPanelComponent from "./components/filter-panel";
 import ReviewsListComponent from "./components/reviews-list";
 import { CSSPadding } from "../../styles/constants";
