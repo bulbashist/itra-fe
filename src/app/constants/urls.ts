@@ -16,6 +16,7 @@ export const usersURL = server + "/api/users/";
 export const commentsURL = server + "/api/comments/";
 export const compositionsURL = server + "/api/compositions/";
 export const reviewRatingsURL = server + "/api/ratings/reviews/";
+export const compositionRatingsURL = server + "/api/ratings/compositions/";
 export const searchURL = server + "/api/reviews/search";
 
 export const imgUploadURL = process.env.REACT_APP_UPLOAD_IMAGE_URL!;

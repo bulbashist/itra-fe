@@ -25,6 +25,7 @@ import ReviewRatingComponent from "../../../../components/review-rating";
 import { Preview } from "../../types";
 import TagButtonComponent from "../../../../components/tag-button";
 import { Link } from "react-router-dom";
+import { Rating10, Rating5 } from "../../../../components/rating";
 
 export const CompositionsListComponent = () => {
   const [compositions, setCompositions] = useState<IComposition[]>([]);
@@ -62,7 +63,8 @@ export const CompositionsListComponent = () => {
                     Автор: {composition.author}
                   </Typography>
                   <Box sx={{ float: "right" }}>
-                    <ReviewRatingComponent rating={composition.avgRating} />
+                    <Typography textAlign="right">Rating:</Typography>
+                    <Rating5 value={composition.avgRating} />
                   </Box>
                 </Stack>
 
