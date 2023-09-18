@@ -6,17 +6,16 @@ import {
   changeRating,
   changeLike,
 } from "./reviews/thunks";
-import axios from "axios";
-import test from "./test.json";
-import { IComment, IReview } from "../../../types";
+import { IComment } from "../../../types";
+import { IReview } from "../types";
 
 type State = {
-  review: null | any;
+  review: null | IReview;
   isBeingEdited: boolean;
 };
 
 const initialState: State = {
-  review: test, //null,
+  review: null,
   isBeingEdited: false,
 };
 
@@ -57,7 +56,7 @@ const slice = createSlice({
       )
       .addCase(
         changeLike.fulfilled,
-        (state, action: PayloadAction<boolean | undefined>) => {
+        (state, action: PayloadAction<boolean>) => {
           state.review!.isLiked = action.payload;
         }
       ),

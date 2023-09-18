@@ -6,23 +6,25 @@ import { Rating10 } from "../rating";
 import TagButtonComponent from "../tag-button";
 
 import defaultImg from "../../assets/default.png";
+import { useAppSelector } from "../../hooks";
 
 type Props = {
   review: IReview;
 };
 
 export const ReviewImgCard = ({ review }: Props) => {
+  const lang = useAppSelector((state) => state.core.lang);
   const navigate = useNavigate();
 
   return (
     <Card
-      variant="outlined"
       sx={{
-        backgroundColor: "#dddddd",
+        // backgroundColor: "#dddddd",
         paddingX: CSSPadding.Large,
         paddingY: CSSPadding.Average,
         cursor: "pointer",
       }}
+      raised
       onClick={() => navigate(`/reviews/${review.id}`)}
     >
       <Stack gap={CSSGap.Small}>
@@ -37,14 +39,9 @@ export const ReviewImgCard = ({ review }: Props) => {
           </Typography>
           <Rating10 value={review.avgRating} readOnly={true} />
         </Stack>
-        <img
-          src={review.previewImg ? review.previewImg : defaultImg}
-          alt=""
-          height="200px"
-          style={{ width: "100%" }}
-        />
+        <img src={review.previewImg ? review.previewImg : defaultImg} alt="" />
         <Grid container justifyContent="space-between">
-          <p>{new Date(review.date).toLocaleString()}</p>
+          <p>{new Date(review.date).toLocaleString(lang)}</p>
           <Stack
             direction="row"
             sx={{ float: "right" }}

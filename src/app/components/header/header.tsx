@@ -14,11 +14,11 @@ export const HeaderComponent = () => {
   const { t } = useTranslation();
 
   return (
-    <AppBar position="sticky" sx={{ bgcolor: "whitesmoke", marginBottom: 3 }}>
+    <AppBar position="sticky" color="default" sx={{ marginBottom: 3 }}>
       <Toolbar>
         <HeaderWrapper>
           <Link to="/">
-            <Typography color="black">{t("header_project_name")}</Typography>
+            <Typography>{t("header_project_name")}</Typography>
           </Link>
           <NavListComponent />
           <SearchComponent />

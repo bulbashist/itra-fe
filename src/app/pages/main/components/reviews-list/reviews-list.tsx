@@ -1,31 +1,21 @@
-import {
-  Card,
-  Grid,
-  List,
-  Pagination,
-  Rating,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { List, Pagination, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../../hooks";
 import { IReview } from "../../../../types";
-import { useNavigate } from "react-router";
-import TagButtonComponent from "../../../../components/tag-button";
-import { CSSGap, CSSMargin, CSSPadding } from "../../../../styles/constants";
+import { CSSGap, CSSMargin } from "../../../../styles/constants";
 import { reviewsURL } from "../../../../constants/urls";
-import { Rating10 } from "../../../../components/rating";
 import ReviewImgCard from "../../../../components/review-img-card";
+import { useTranslation } from "react-i18next";
 
 export const ReviewsListComponent = () => {
   const filter = useAppSelector((state) => state.main.filter);
-  const navigate = useNavigate();
-
   const tag = useAppSelector((state) => state.core.tag);
 
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [page, setPage] = useState(1);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     axios
@@ -43,9 +33,7 @@ export const ReviewsListComponent = () => {
         sx={{ width: "100%" }}
         gap={CSSGap.Small}
       >
-        <Typography align="center">
-          No reviews are matched this criteria, try another one
-        </Typography>
+        <Typography align="center">{t("no_reviews")}</Typography>
         <Pagination
           sx={{ alignSelf: "end" }}
           page={page}

@@ -7,8 +7,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import axios from "axios";
-import { t } from "i18next";
 import { useEffect } from "react";
 import { IUser } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -20,11 +18,13 @@ import DeleteForever from "@mui/icons-material/DeleteForever";
 import AdminCellComponent from "./components/admin-cell";
 import { Link } from "react-router-dom";
 import BlockCellComponent from "./components/block-cell";
+import { useTranslation } from "react-i18next";
 
 export const AdminPage = () => {
   const isAdmin = useAppSelector((state) => state.core.isAdmin);
   const users = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isAdmin) {
@@ -36,8 +36,8 @@ export const AdminPage = () => {
 
   return (
     <PageWrapperComponent>
-      <Box padding={CSSPadding.Decent}>
-        <Table border={1} cellSpacing={20}>
+      <Box padding={CSSPadding.Decent} sx={{ overflow: "auto" }}>
+        <Table border={1}>
           <TableHead>
             <th>id</th>
             <th>{t("admin_login")}</th>
@@ -50,18 +50,17 @@ export const AdminPage = () => {
             {users.map((user: IUser) => (
               <TableRow key={user.id}>
                 <TableCell>{user.id}</TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Link to={`/users/${user.id}`}>{user.login}</Link>
                 </TableCell>
-                <TableCell>{user.name}</TableCell>
-
-                <TableCell>
+                <TableCell align="center">{user.name}</TableCell>
+                <TableCell align="center">
                   <BlockCellComponent user={user} />
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <AdminCellComponent user={user} />
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Button
                     variant="contained"
                     color="error"
@@ -78,9 +77,3 @@ export const AdminPage = () => {
     </PageWrapperComponent>
   );
 };
-
-/*
-
-список каждый юзер нажимается выпадает список его обзоров
-удалить заблокировать просмотр назначить админом
-*/

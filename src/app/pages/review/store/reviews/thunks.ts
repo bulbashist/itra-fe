@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { reviewRatingsURL, reviewsURL } from "../../../../constants/urls";
-import { IReview } from "../../../../types";
+import { IReview } from "../../types";
 
 const getReview = createAsyncThunk("get-review", async (id: number) => {
   const response = await axios.get(reviewsURL + id, { withCredentials: true });

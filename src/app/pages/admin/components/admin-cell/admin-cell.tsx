@@ -14,6 +14,7 @@ export const AdminCellComponent = ({ user }: Props) => {
 
   return !user.isAdmin ? (
     <Slider
+      sx={{ width: "50px" }}
       min={0}
       max={1}
       value={Number(user.isAdmin)}

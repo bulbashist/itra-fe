@@ -1,22 +1,21 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import MainPage from "./app/pages/main";
-import UserPage from "./app/pages/user";
-import HeaderComponent from "./app/components/header";
-import ReviewPage from "./app/pages/review";
-import { Container, ThemeProvider } from "@mui/material";
-import CompositionPage from "./app/pages/composition";
-import { theme } from "./app/themes/theme";
-
+import { ThemeProvider } from "@mui/material";
 import "./app/translation";
 import { getUserData } from "./app/store/core-reducer";
-import { useAppDispatch } from "./app/hooks";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import { themes } from "./app/themes/theme";
+
 import AdminPage from "./app/pages/admin";
-import { ReviewsPage } from "./app/pages/reviews/reviews";
-import SearchPage from "./app/pages/search";
+import CompositionPage from "./app/pages/composition";
 import CompositionsPage from "./app/pages/compositions";
+import MainPage from "./app/pages/main";
 import NoPage from "./app/pages/404";
+import ReviewPage from "./app/pages/review";
+import ReviewsPage from "./app/pages/reviews";
+import SearchPage from "./app/pages/search";
+import UserPage from "./app/pages/user";
 
 const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -31,6 +30,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const mode = useAppSelector((state) => state.core.theme);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -38,9 +38,11 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
+    <ThemeProvider theme={themes[mode]}>
+      <div className="App">
+        <RouterProvider router={router} />
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -67,7 +67,7 @@ export const AuthModalComponent = ({ isOpen, closeModal }: Props) => {
           />
           <Button onClick={logIn}>{t("login_button")}</Button>
           <Container sx={{ margin: 0, padding: 2 }}>
-            <Stack alignItems="center" sx={{}} spacing={1}>
+            <Stack alignItems="center" spacing={1}>
               <Typography variant="subtitle2">
                 {t("login_popup_socials")}
               </Typography>

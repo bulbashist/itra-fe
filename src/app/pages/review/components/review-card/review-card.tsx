@@ -1,30 +1,23 @@
 import {
   Avatar,
   Box,
-  Button,
   Card,
-  Grid,
   List,
   ListItem,
-  Rating,
   Stack,
   Typography,
 } from "@mui/material";
 import { CommentBlockComponent } from "../comment-block/comment-block";
-import {
-  DeleteForever,
-  EditNote,
-  ThumbDown,
-  ThumbUp,
-} from "@mui/icons-material";
+import { DeleteForever, EditNote, ThumbUp } from "@mui/icons-material";
 import ReactMarkdown from "react-markdown";
 import { IReview } from "../../../../types";
 import { CSSGap, CSSMargin, CSSPadding } from "../../../../styles/constants";
 import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import { deleteReview, setEditingState } from "../../store/slice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { changeLike, changeRating } from "../../store/reviews/thunks";
 import { Rating10 } from "../../../../components/rating";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   review: IReview | any;
@@ -34,6 +27,7 @@ export const ReviewCardComponent = ({ review }: Props) => {
   const { id: userId, isAdmin } = useAppSelector((state) => state.core);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   if (!review) return null;
 
@@ -86,24 +80,24 @@ export const ReviewCardComponent = ({ review }: Props) => {
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Box>
           <Stack direction="row" gap={CSSGap.Tiny / 2}>
-            <Typography color="GrayText">Текст:</Typography>
+            <Typography color="GrayText">{t("review_card_text")}:</Typography>
             <Typography>{review.author.name}</Typography>
           </Stack>
           <Stack direction="row" gap={CSSGap.Tiny / 2}>
             <Typography color="GrayText" textAlign="left">
-              Произведение:
+              {t("review_card_composition")}:
             </Typography>
-            <Typography textAlign="left">{review.compositionName}</Typography>
+            <Typography textAlign="left">{review.composition.name}</Typography>
           </Stack>
         </Box>
         <Stack direction="column" gap={CSSGap.Tiny / 2} alignItems="end">
-          <Typography>Рейтинг:</Typography>
+          <Typography>{t("word_rating")}:</Typography>
           <Rating10 value={review.avgRating} readOnly={true} />
         </Stack>
       </Stack>
       {userId ? (
         <List sx={{ marginTop: CSSMargin.Small }}>
-          <Typography variant="h5">Оцените отзыв:</Typography>
+          <Typography variant="h5">{t("mark_review")}:</Typography>
           <Rating10
             value={review.userRating}
             onChange={(_, value) => {

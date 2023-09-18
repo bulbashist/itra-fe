@@ -14,5 +14,5 @@ export const DarkThemeIcon = ({ nextTheme }: Props) => {
     dispatch(changeTheme(nextTheme));
   };
 
-  return <DarkMode htmlColor="black" onClick={onClick} />;
+  return <DarkMode htmlColor="white" onClick={onClick} />;
 };

@@ -1,21 +1,9 @@
-import {
-  Box,
-  Button,
-  Container,
-  Dialog,
-  DialogTitle,
-  Input,
-  Stack,
-  Typography,
-} from "@mui/material";
-import axios from "axios";
+import { Box, Button, Card, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { logInURL } from "../../../../constants/urls";
 import { AuthModalComponent } from "./modal";
 import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import { Link } from "react-router-dom";
-import { GridColDef } from "@mui/x-data-grid";
 import { signOut } from "../../../../store/core-reducer";
 
 export const LoginComponent = () => {
@@ -30,7 +18,7 @@ export const LoginComponent = () => {
     return (
       <Box position="relative">
         <Button onClick={() => setIsDropbox((ps) => !ps)}>
-          <Typography color="black">{username}</Typography>
+          <Typography>{username}</Typography>
         </Button>
         {isDropBox ? (
           <Box
@@ -38,17 +26,16 @@ export const LoginComponent = () => {
             position="absolute"
             right={0}
             top={40}
-            borderRadius={5}
-            color="white"
-            sx={{ backgroundColor: "white" }}
             onClick={() => setIsDropbox(false)}
           >
-            <Link to={`/users/${id}`}>
-              <Button>{t("login_profile")}</Button>
-            </Link>
-            <Button onClick={() => dispatch(signOut())}>
-              {t("login_signout")}
-            </Button>
+            <Card>
+              <Link to={`/users/${id}`}>
+                <Button>{t("login_profile")}</Button>
+              </Link>
+              <Button onClick={() => dispatch(signOut())}>
+                {t("login_signout")}
+              </Button>
+            </Card>
           </Box>
         ) : null}
       </Box>

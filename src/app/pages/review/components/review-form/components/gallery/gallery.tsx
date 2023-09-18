@@ -8,7 +8,6 @@ type Props = {
 
 export const GalleryComponent = ({ images }: Props) => {
   const { t } = useTranslation();
-
   return (
     <Stack direction="column" gap={CSSGap.Small}>
       <Typography variant="h5" textAlign="center">

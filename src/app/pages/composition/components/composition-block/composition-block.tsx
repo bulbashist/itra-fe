@@ -5,6 +5,7 @@ import { CSSGap, CSSMargin } from "../../../../styles/constants";
 import { Link } from "react-router-dom";
 import { Rating5 } from "../../../../components/rating";
 import { changeRating } from "../../store/slice";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   openModal: () => void;
@@ -14,6 +15,7 @@ export const CompositionBlockComponent = ({ openModal }: Props) => {
   const userId = useAppSelector((state) => state.core.id);
   const composition = useAppSelector((state) => state.composition);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   if (!composition) return <div>Not Found</div>;
 
@@ -23,7 +25,7 @@ export const CompositionBlockComponent = ({ openModal }: Props) => {
       <List>
         <Box>
           <Stack direction="row" gap={CSSGap.Tiny / 2}>
-            <Typography color="GrayText">Автор:</Typography>
+            <Typography color="GrayText">{t("word_author")}:</Typography>
             <Typography>{composition.author}</Typography>
           </Stack>
         </Box>
@@ -35,7 +37,7 @@ export const CompositionBlockComponent = ({ openModal }: Props) => {
 
       {userId ? (
         <List sx={{ marginTop: CSSMargin.Small }}>
-          <Typography variant="h5">Оцените произведение:</Typography>
+          <Typography variant="h5">{t("mark_composition")}:</Typography>
           <Rating5
             value={composition.userRating}
             onChange={(_, value) =>
@@ -46,7 +48,9 @@ export const CompositionBlockComponent = ({ openModal }: Props) => {
       ) : null}
 
       <Box marginTop={CSSMargin.Large}>
-        <Typography textAlign="left">Похожие отзывы:</Typography>
+        <Typography textAlign="left">
+          {t("composition_card_reviews")}:
+        </Typography>
         <List>
           {composition.reviews.map((review) => (
             <ListItem key={review.id}>
@@ -59,7 +63,7 @@ export const CompositionBlockComponent = ({ openModal }: Props) => {
       </Box>
       {userId ? (
         <Button onClick={() => openModal()} fullWidth>
-          Написать отзыв
+          {t("composition_card_create_review")}
         </Button>
       ) : null}
     </Box>

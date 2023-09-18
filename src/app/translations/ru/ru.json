@@ -1,6 +1,8 @@
 {
   "translation": {
+    "word_author": "Автор",
     "word_rating": "Рейтинг",
+    "word_submit": "Подтвердить",
 
     "header_project_name": "Финальный проект",
     "header_search_placeholder": "Поиск по сайту",
@@ -34,6 +36,27 @@
 
     "user_reviews_table_review": "Отзыв",
     "user_reviews_table_composition": "Произведение",
-    "user_reviews_table_avg_rating": "Средний рейтинг"
+    "user_reviews_table_avg_rating": "Средний рейтинг",
+
+    "review_card_text": "Текст",
+    "review_card_composition": "Произведение",
+    "review_card_comments": "Комментарии",
+
+    "review_create_form_title": "Создание отзыва",
+    "review_update_form_title": "Редактирование отзыва",
+    "review_form_title_ph": "Введите название",
+    "review_form_text_ph": "Напишите свой текст",
+    "review_form_img_preview_ph": "Загрузите сюда превью",
+    "review_form_img_markup_ph": "Загрузите изображение для получения разметки на него",
+    "review_form_gallery": "Галерея",
+    "review_form_no_img": "Пока изображений нету",
+
+    "composition_card_reviews": "Другие отзывы на это произведение",
+    "composition_card_create_review": "Напишите свой отзыв",
+
+    "mark_review": "Оцените отзыв",
+    "mark_composition": "Оцените произведение",
+
+    "no_reviews": "Не найдено отзывов, соответствующих критериям"
   }
 }

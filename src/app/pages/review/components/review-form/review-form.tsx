@@ -8,7 +8,8 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import Close from "@mui/icons-material/Close";
 import { ITag } from "../../../../types";
 import { ImageServer } from "./image-server";
-import { uploadReview } from "../../store/slice";
+//@ts-ignore
+import { changeReview, setEditingState, uploadReview } from "../../store/slice";
 import { GalleryComponent } from "./components/gallery/gallery";
 
 import styles from "./styles.module.css";
@@ -27,10 +28,9 @@ type Props = {
 
 export const ReviewFormComponent = ({ closeModal }: Props) => {
   const theme = useAppSelector((state) => state.core.theme);
-  const composition = useAppSelector((state) => state.composition);
+  const review = useAppSelector((state) => state.review.review);
 
-  const [previewImg, setPreviewImg] = useState("");
-  const [tags, setTags] = useState<ITag[]>([]);
+  const [tags, setTags] = useState<ITag[]>(review?.tags ?? []);
   const [images, setImages] = useState<string[]>([]);
 
   const { handleSubmit, register } = useForm<FormData>();
@@ -39,13 +39,7 @@ export const ReviewFormComponent = ({ closeModal }: Props) => {
 
   const imgServer = useRef(new ImageServer());
 
-  if (!composition) return null;
-
-  const handleChange = async (f: File) => {
-    const url = await imgServer.current.uploadImage(f);
-    setPreviewImg(url);
-    setImages((ps) => [...ps, url]);
-  };
+  if (!review) return null;
 
   const loadToGallery = async (f: File) => {
     const url = await imgServer.current.uploadImage(f);
@@ -53,47 +47,36 @@ export const ReviewFormComponent = ({ closeModal }: Props) => {
   };
 
   const formHandler = (data: FormData) => {
-    dispatch(
-      uploadReview({
-        composition: { id: composition.id },
-        ...data,
-        previewImg,
-        tags,
-      })
-    );
+    dispatch(changeReview({ id: review.id, ...data, tags }));
     closeModal();
   };
 
   return (
     <Dialog open fullWidth={true} maxWidth={false}>
-      <Close className={styles.closeBtn} onClick={closeModal} />
+      <Close
+        className={styles.closeBtn}
+        onClick={() => dispatch(setEditingState(false))}
+      />
       <DialogTitle textAlign="center">
-        {t("review_create_form_title")}
+        {t("review_update_form_title")}
       </DialogTitle>
       <Stack direction="column" gap={CSSGap.Average} padding={CSSPadding.Small}>
         <form onSubmit={handleSubmit(formHandler)}>
           <Stack direction="column" gap={CSSGap.Small}>
             <Input
+              defaultValue={review.title}
               placeholder={t("review_form_title_ph")}
               {...register("title")}
               sx={{ width: "300px", alignSelf: "center" }}
             />
-            <Grid container gap={CSSGap.Small}>
-              <Grid item xs={8} md={5}>
-                <FileUploader
-                  handleChange={handleChange}
-                  label={t("review_form_img_preview_ph")}
-                />
-              </Grid>
-              <Grid item xs={8} md={5}>
-                <FileUploader
-                  handleChange={loadToGallery}
-                  label={t("review_form_img_markup_ph")}
-                />
-              </Grid>
-            </Grid>
+
+            <FileUploader
+              handleChange={loadToGallery}
+              label={t("review_form_img_markup_ph")}
+            />
             <textarea
               rows={15}
+              defaultValue={review.text}
               style={{
                 backgroundColor: theme === Theme.Light ? "white" : "black",
                 color: theme === Theme.Light ? "black" : "white",

@@ -3,12 +3,14 @@ import { useEffect } from "react";
 import { getReview } from "./store/slice";
 import { useParams } from "react-router";
 import ReviewCardComponent from "./components/review-card";
-import { EditFormComponent } from "./components/edit-form/edit-form";
 import NoPage from "../404";
+import { useState } from "react";
 import PageWrapperComponent from "../../components/page-wrapper";
+import ReviewFormComponent from "./components/review-form";
 
 export const ReviewPage = () => {
   const { isBeingEdited, review } = useAppSelector((state) => state.review);
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
@@ -23,9 +25,10 @@ export const ReviewPage = () => {
   return (
     <PageWrapperComponent>
       {isBeingEdited ? (
-        <EditFormComponent />
+        // <EditFormComponent />
+
+        <ReviewFormComponent closeModal={() => setIsOpen(false)} />
       ) : (
-        // <ReviewFormComponent closeModal={() => {}} />
         <ReviewCardComponent review={review} />
       )}
     </PageWrapperComponent>

@@ -1,19 +1,7 @@
-import {
-  Box,
-  Button,
-  Card,
-  Grid,
-  Pagination,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Card, Grid, Pagination, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { IComposition, IReview } from "../../../../types";
-import {
-  compositionsURL,
-  getReviewsURL,
-  reviewsURL,
-} from "../../../../constants/urls";
+import { IComposition } from "../../../../types";
+import { compositionsURL } from "../../../../constants/urls";
 import axios from "axios";
 import {
   CSSGap,
@@ -21,15 +9,15 @@ import {
   CSSPadding,
   FontWeight,
 } from "../../../../styles/constants";
-import ReviewRatingComponent from "../../../../components/review-rating";
-import { Preview } from "../../types";
 import TagButtonComponent from "../../../../components/tag-button";
 import { Link } from "react-router-dom";
-import { Rating10, Rating5 } from "../../../../components/rating";
+import { Rating5 } from "../../../../components/rating";
+import { useTranslation } from "react-i18next";
 
 export const CompositionsListComponent = () => {
   const [compositions, setCompositions] = useState<IComposition[]>([]);
   const [page, setPage] = useState(1);
+  const { t } = useTranslation();
 
   useEffect(() => {
     axios
@@ -50,6 +38,7 @@ export const CompositionsListComponent = () => {
                   padding: CSSPadding.Tiny,
                   position: "relative",
                 }}
+                raised
               >
                 <Typography
                   variant="h6"
@@ -60,10 +49,12 @@ export const CompositionsListComponent = () => {
                 </Typography>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography textAlign="left">
-                    Автор: {composition.author}
+                    {t("word_author")}: {composition.author}
                   </Typography>
                   <Box sx={{ float: "right" }}>
-                    <Typography textAlign="right">Rating:</Typography>
+                    <Typography textAlign="right">
+                      {t("word_rating")}:
+                    </Typography>
                     <Rating5 value={composition.avgRating} />
                   </Box>
                 </Stack>

@@ -12,6 +12,7 @@ export const BlockCellComponent = ({ user }: Props) => {
 
   return (
     <Slider
+      sx={{ width: "50px" }}
       min={0}
       max={1}
       value={Number(user.isBlocked)}

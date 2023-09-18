@@ -2,7 +2,7 @@ import Stack from "@mui/material/Stack";
 
 import FilterPanelComponent from "./components/filter-panel";
 import ReviewsListComponent from "./components/reviews-list";
-import { CSSPadding } from "../../styles/constants";
+import { CSSGap, CSSPadding } from "../../styles/constants";
 import PageWrapperComponent from "../../components/page-wrapper";
 
 export const MainPage = () => {
@@ -12,6 +12,7 @@ export const MainPage = () => {
         direction="column"
         alignItems="flex-start"
         padding={CSSPadding.Average}
+        gap={CSSGap.Small}
       >
         <FilterPanelComponent />
         <ReviewsListComponent />

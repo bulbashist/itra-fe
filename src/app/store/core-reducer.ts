@@ -6,7 +6,7 @@ import i18next from "i18next";
 import { ITag } from "../types";
 import { signOutURL } from "../constants/urls";
 
-type InitialState = {
+type State = {
   id: number | null;
   name: string | null;
   isAdmin: boolean;
@@ -15,7 +15,7 @@ type InitialState = {
   tag: ITag | null;
 };
 
-const initialState: InitialState = {
+const initialState: State = {
   id: null,
   name: null,
   isAdmin: false,
@@ -62,14 +62,11 @@ const slice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      .addCase(
-        getUserData.fulfilled,
-        (state, action: PayloadAction<InitialState>) => {
-          state.id = action.payload.id;
-          state.isAdmin = action.payload.isAdmin;
-          state.name = action.payload.name;
-        }
-      )
+      .addCase(getUserData.fulfilled, (state, action: PayloadAction<State>) => {
+        state.id = action.payload.id;
+        state.isAdmin = action.payload.isAdmin;
+        state.name = action.payload.name;
+      })
       .addCase(signOut.fulfilled, (state, _) => {
         state.id = null;
         state.isAdmin = false;

@@ -38,6 +38,7 @@ export const ReviewsListComponent = () => {
                 padding: CSSPadding.Tiny,
                 position: "relative",
               }}
+              raised
               onClick={() => navigate(`/reviews/${review.id}`)}
             >
               <Typography
