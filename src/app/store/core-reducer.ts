@@ -47,16 +47,9 @@ const slice = createSlice({
       i18next.changeLanguage(action.payload);
     },
     addTag: (state, action: PayloadAction<ITag>) => {
-      // FOR MULTIPLE
-      // const tag = state.tags.find((tag) => tag.id === action.payload.id);
-      // if (!tag) {
-      //   state.tags = [...state.tags, action.payload];
-      // }
-
       state.tag = action.payload;
     },
     deleteTag: (state, action: PayloadAction<number>) => {
-      // state.tags = state.tags.filter((tag) => tag.id !== action.payload);
       state.tag = null;
     },
   },
@@ -74,6 +67,6 @@ const slice = createSlice({
       }),
 });
 
+export { getUserData, signOut };
 export const { changeLang, changeTheme, addTag, deleteTag } = slice.actions;
 export default slice.reducer;
-export { getUserData, signOut };

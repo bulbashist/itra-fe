@@ -1,7 +1,10 @@
-import { Send } from "@mui/icons-material";
-import { Avatar, Input, ListItem, Stack } from "@mui/material";
-import { CSSMargin } from "../../../../../../styles/constants";
+import Send from "@mui/icons-material/Send";
+import Avatar from "@mui/material/Avatar";
+import Input from "@mui/material/Input";
+import ListItem from "@mui/material/ListItem";
+import Stack from "@mui/material/Stack";
 import { useState } from "react";
+import { CSSMargin } from "app/styles/constants";
 import { connection } from "../../services/ws-connection";
 
 type Props = {

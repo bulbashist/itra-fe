@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useAppDispatch } from "../../hooks";
-import { getComposition } from "./store/slice";
+
+import PageWrapperComponent from "app/components/page-wrapper";
+import { useAppDispatch } from "app/hooks";
+
 import CompositionBlockComponent from "./components/composition-block";
 import ReviewFormComponent from "./components/review-form";
-import { useState } from "react";
-import PageWrapperComponent from "../../components/page-wrapper";
+import { getComposition } from "./store/slice";
 
 export const CompositionPage = () => {
   const { id } = useParams();

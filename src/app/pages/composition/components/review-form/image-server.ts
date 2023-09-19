@@ -1,9 +1,8 @@
 import axios from "axios";
-import { imgUploadURL } from "../../../../constants/urls";
+import { imgUploadURL } from "app/constants/urls";
 
 export class ImageServer {
   public async uploadImage(file: File) {
-    // console.log(files);
     const base64Data = await this.readFile(file);
 
     const response = await axios.post(

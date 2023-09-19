@@ -1,5 +1,6 @@
-import { Stack, Typography } from "@mui/material";
-import { CSSGap } from "../../../../../../styles/constants";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { CSSGap } from "../../../styles/constants";
 import { useTranslation } from "react-i18next";
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
 
 export const GalleryComponent = ({ images }: Props) => {
   const { t } = useTranslation();
+
   return (
     <Stack direction="column" gap={CSSGap.Small}>
       <Typography variant="h5" textAlign="center">

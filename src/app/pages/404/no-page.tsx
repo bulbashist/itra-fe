@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import PageWrapperComponent from "../../components/page-wrapper";
+import PageWrapperComponent from "app/components/page-wrapper";
 
 export const NoPage = () => {
   return (

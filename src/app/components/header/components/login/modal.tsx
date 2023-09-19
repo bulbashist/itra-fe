@@ -1,12 +1,4 @@
-import {
-  Button,
-  Container,
-  Dialog,
-  DialogTitle,
-  Input,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Dialog, Input, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import {
@@ -15,9 +7,10 @@ import {
   logInURL,
   signUpURL,
 } from "../../../../constants/urls";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../../hooks";
 import { getUserData } from "../../../../store/core-reducer";
+import { CSSGap, CSSPadding } from "../../../../styles/constants";
 
 type Props = {
   isOpen: boolean;
@@ -30,6 +23,7 @@ export const AuthModalComponent = ({ isOpen, closeModal }: Props) => {
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const authorize = (url: string) => {
     axios
@@ -42,7 +36,7 @@ export const AuthModalComponent = ({ isOpen, closeModal }: Props) => {
         { withCredentials: true }
       )
       .then(() => dispatch(getUserData()))
-      .catch(console.error);
+      .catch((e) => setError(e.response.data.message));
   };
 
   const signUp = () => authorize(signUpURL);
@@ -50,9 +44,8 @@ export const AuthModalComponent = ({ isOpen, closeModal }: Props) => {
 
   return (
     <Dialog open={isOpen} onClick={closeModal}>
-      <Container onClick={(e) => e.stopPropagation()}>
-        <DialogTitle align="center"></DialogTitle>
-        <Stack direction="column" alignItems="center" spacing={2}>
+      <Box padding={CSSPadding.Average} onClick={(e) => e.stopPropagation()}>
+        <Stack direction="column" alignItems="center" gap={CSSGap.Small}>
           <Input
             type="text"
             value={login}
@@ -66,36 +59,39 @@ export const AuthModalComponent = ({ isOpen, closeModal }: Props) => {
             placeholder={t("login_popup_password")}
           />
           <Button onClick={logIn}>{t("login_button")}</Button>
-          <Container sx={{ margin: 0, padding: 2 }}>
-            <Stack alignItems="center" spacing={1}>
-              <Typography variant="subtitle2">
-                {t("login_popup_socials")}
-              </Typography>
-              <Button
-                variant="outlined"
-                fullWidth={true}
-                onClick={() => {
-                  window.location.href = googleUrl;
-                }}
-              >
-                {t("login_popup_google")}
-              </Button>
-              <Button
-                variant="outlined"
-                fullWidth={true}
-                onClick={() => {
-                  window.location.href = githubUrl;
-                }}
-              >
-                {t("login_popup_github")}
-              </Button>
-              <Button variant="outlined" fullWidth={true} onClick={signUp}>
-                {t("login_popup_signin")}
-              </Button>
-            </Stack>
-          </Container>
         </Stack>
-      </Container>
+        <Typography color="red" textAlign="center">
+          {error}
+        </Typography>
+        <Box padding={CSSPadding.Small}>
+          <Stack alignItems="center" spacing={1}>
+            <Typography variant="subtitle2">
+              {t("login_popup_socials")}
+            </Typography>
+            <Button
+              variant="outlined"
+              fullWidth={true}
+              onClick={() => {
+                window.location.href = googleUrl;
+              }}
+            >
+              {t("login_popup_google")}
+            </Button>
+            <Button
+              variant="outlined"
+              fullWidth={true}
+              onClick={() => {
+                window.location.href = githubUrl;
+              }}
+            >
+              {t("login_popup_github")}
+            </Button>
+            <Button variant="outlined" fullWidth={true} onClick={signUp}>
+              {t("login_popup_signin")}
+            </Button>
+          </Stack>
+        </Box>
+      </Box>
     </Dialog>
   );
 };

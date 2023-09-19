@@ -1,18 +1,18 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IUser } from "../types";
 import axios from "axios";
-import { usersURL } from "../../../constants/urls";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { usersURL } from "app/constants/urls";
+import { IUser } from "../types";
 
-type UserData = IUser | null;
+type State = IUser | null;
 
-const initialState: UserData = null;
+const initialState: State = null;
 
 const getUserData = createAsyncThunk("load-user-data", async (id: number) => {
   const response = await axios.get(usersURL + id);
   return response.data;
 });
 
-const slice = createSlice<UserData, any>({
+const slice = createSlice<State, any>({
   name: "user-data",
   initialState,
   reducers: {},

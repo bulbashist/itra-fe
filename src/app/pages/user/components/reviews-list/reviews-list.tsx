@@ -2,8 +2,8 @@ import { useAppSelector } from "../../../../hooks";
 import { Link } from "react-router-dom";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useTranslation } from "react-i18next";
-import { Rating } from "@mui/material";
 import { Rating10 } from "../../../../components/rating";
+import { Box } from "@mui/material";
 
 export const ReviewsListComponent = () => {
   const reviews = useAppSelector((state) => state.user?.reviews);
@@ -22,6 +22,7 @@ export const ReviewsListComponent = () => {
     {
       field: "title",
       headerName: t("user_reviews_table_review"),
+      minWidth: 100,
       flex: 1,
       headerAlign: "center",
       align: "center",
@@ -34,6 +35,7 @@ export const ReviewsListComponent = () => {
       field: "name",
       headerAlign: "center",
       headerName: t("user_reviews_table_composition"),
+      minWidth: 100,
       flex: 1,
       align: "center",
       renderCell: (params) => {
@@ -45,6 +47,7 @@ export const ReviewsListComponent = () => {
       field: "avgRating",
       headerName: t("user_reviews_table_avg_rating"),
       headerAlign: "center",
+      minWidth: 200,
       flex: 1,
       align: "center",
 
@@ -54,5 +57,9 @@ export const ReviewsListComponent = () => {
     },
   ];
 
-  return <DataGrid columns={fields} rows={reviews}></DataGrid>;
+  return (
+    <Box sx={{ overflow: "auto" }}>
+      <DataGrid columns={fields} rows={reviews} hideFooter />
+    </Box>
+  );
 };

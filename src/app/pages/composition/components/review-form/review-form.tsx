@@ -1,20 +1,26 @@
-import { Button, Dialog, DialogTitle, Grid, Input, Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import Input from "@mui/material/Input";
+import Stack from "@mui/material/Stack";
+import Close from "@mui/icons-material/Close";
+
 import { useState, useRef } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useForm } from "react-hook-form";
-
-import { CSSGap, CSSPadding } from "../../../../styles/constants";
-import { useAppDispatch, useAppSelector } from "../../../../hooks";
-import Close from "@mui/icons-material/Close";
-import { ITag } from "../../../../types";
-import { ImageServer } from "./image-server";
-import { uploadReview } from "../../store/slice";
-import { GalleryComponent } from "./components/gallery/gallery";
-
-import styles from "./styles.module.css";
-import TagsPanelComponent from "./components/tags-panel";
-import { Theme } from "../../../../themes/types";
 import { useTranslation } from "react-i18next";
+
+import GalleryComponent from "app/components/utility/review-form-gallery";
+import { CSSGap, CSSPadding } from "app/styles/constants";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { ITag } from "app/types";
+import { Theme } from "app/themes/types";
+
+import TagsPanelComponent from "app/components/utility/tags-panel";
+import { uploadReview } from "../../store/slice";
+import { ImageServer } from "./image-server";
 
 type FormData = {
   title: string;
@@ -66,7 +72,9 @@ export const ReviewFormComponent = ({ closeModal }: Props) => {
 
   return (
     <Dialog open fullWidth={true} maxWidth={false}>
-      <Close className={styles.closeBtn} onClick={closeModal} />
+      <Box position="absolute" top={8} right={8}>
+        <Close onClick={closeModal} />
+      </Box>
       <DialogTitle textAlign="center">
         {t("review_create_form_title")}
       </DialogTitle>
@@ -101,7 +109,11 @@ export const ReviewFormComponent = ({ closeModal }: Props) => {
               placeholder={t("review_form_text_ph")}
               {...register("text")}
             />
-            <TagsPanelComponent tags={tags} setTags={setTags} />
+            <TagsPanelComponent
+              tags={tags}
+              setTags={setTags}
+              compositionTag={composition.tag}
+            />
             <Button type="submit" sx={{ alignSelf: "end" }}>
               {t("word_submit")}
             </Button>

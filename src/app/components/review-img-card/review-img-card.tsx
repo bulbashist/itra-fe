@@ -5,8 +5,8 @@ import { IReview } from "../../types";
 import { Rating10 } from "../rating";
 import TagButtonComponent from "../tag-button";
 
-import defaultImg from "../../assets/default.png";
-import { useAppSelector } from "../../hooks";
+import defaultImg from "app/assets/default.webp";
+import { useAppSelector } from "app/hooks";
 
 type Props = {
   review: IReview;
@@ -19,7 +19,6 @@ export const ReviewImgCard = ({ review }: Props) => {
   return (
     <Card
       sx={{
-        // backgroundColor: "#dddddd",
         paddingX: CSSPadding.Large,
         paddingY: CSSPadding.Average,
         cursor: "pointer",

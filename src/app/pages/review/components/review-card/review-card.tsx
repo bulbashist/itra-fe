@@ -1,26 +1,29 @@
-import {
-  Avatar,
-  Box,
-  Card,
-  List,
-  ListItem,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { CommentBlockComponent } from "../comment-block/comment-block";
-import { DeleteForever, EditNote, ThumbUp } from "@mui/icons-material";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import DeleteForever from "@mui/icons-material/DeleteForever";
+import EditNote from "@mui/icons-material/EditNote";
+import ThumbUp from "@mui/icons-material/ThumbUp";
+
 import ReactMarkdown from "react-markdown";
-import { IReview } from "../../../../types";
-import { CSSGap, CSSMargin, CSSPadding } from "../../../../styles/constants";
-import { useAppDispatch, useAppSelector } from "../../../../hooks";
-import { deleteReview, setEditingState } from "../../store/slice";
 import { useNavigate } from "react-router-dom";
-import { changeLike, changeRating } from "../../store/reviews/thunks";
-import { Rating10 } from "../../../../components/rating";
 import { useTranslation } from "react-i18next";
 
+import { CSSGap, CSSMargin, CSSPadding } from "app/styles/constants";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { Rating10 } from "app/components/rating";
+
+import CommentBlockComponent from "../comment-block";
+import { deleteReview, setEditingState } from "../../store/slice";
+import { IReview } from "../../types";
+import { changeLike, changeRating } from "../../store/reviews/thunks";
+
 type Props = {
-  review: IReview | any;
+  review: IReview;
 };
 
 export const ReviewCardComponent = ({ review }: Props) => {
@@ -28,8 +31,6 @@ export const ReviewCardComponent = ({ review }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-
-  if (!review) return null;
 
   return (
     <Card sx={{ padding: CSSPadding.Decent, position: "relative" }}>

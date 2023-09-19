@@ -1,40 +1,27 @@
 import { useState, useEffect } from "react";
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import axios from "axios";
-import { useAppDispatch, useAppSelector } from "../../../../../../hooks";
-import { Stack } from "@mui/system";
-import { addTag, deleteTag } from "../../../../../../store/core-reducer";
-import { Cancel } from "@mui/icons-material";
-import { ITag } from "../../../../../../types";
-import {
-  CSSGap,
-  CSSMargin,
-  CSSPadding,
-} from "../../../../../../styles/constants";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { addTag, deleteTag } from "app/store/core-reducer";
+import Cancel from "@mui/icons-material/Cancel";
+import { ITag } from "app/types";
+import { CSSMargin } from "app/styles/constants";
 import { TagCloud } from "react-tagcloud";
+import { tagsURL } from "app/constants/urls";
 
 export const TagsPanelComponent = () => {
   const dispatch = useAppDispatch();
-  const [tags, setTags] = useState<ITag[]>([{ id: 1, name: "fbdbbr" }]);
+  const [tags, setTags] = useState<ITag[]>([]);
   const currTag = useAppSelector((state) => state.core.tag);
 
   useEffect(() => {
-    const getTags = async () => {
-      const url = process.env.REACT_APP_SERVER + "/api/tags";
-      try {
-        const response = await axios.get<ITag[]>(url);
-        setTags(response.data);
-      } catch {}
-    };
-
-    getTags();
+    axios
+      .get<ITag[]>(tagsURL)
+      .then((resp) => setTags(resp.data))
+      .catch(console.error);
   }, []);
 
   return (
@@ -42,8 +29,8 @@ export const TagsPanelComponent = () => {
       <Box sx={{ cursor: "pointer" }}>
         <TagCloud
           tags={tags.map((tag) => ({ value: tag.name }))}
-          maxSize={20}
           minSize={14}
+          maxSize={20}
           onClick={(selected: { value: string }) => {
             dispatch(addTag(tags.find((tag) => tag.name === selected.value)!));
           }}

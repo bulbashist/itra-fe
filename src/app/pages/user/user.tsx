@@ -29,8 +29,12 @@ export const UserPage = () => {
           alignItems="center"
           marginRight={CSSMargin.Average}
         >
-          <Typography variant="h5">{user.likes}</Typography>
-          <ThumbUp color="success" />
+          {user.likes ? (
+            <>
+              <Typography variant="h5">{user.likes}</Typography>
+              <ThumbUp color="success" />
+            </>
+          ) : null}
           <Typography variant="h5" marginLeft={CSSMargin.Decent}>
             {user.name}
           </Typography>

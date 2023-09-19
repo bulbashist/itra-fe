@@ -1,10 +1,5 @@
 const server = process.env.REACT_APP_SERVER;
 
-export const getReviewsURL = process.env.REACT_APP_SERVER + "/api/reviews";
-
-export const getReviewURL = (id: number) =>
-  process.env.REACT_APP_SERVER + "/api/reviews/" + id;
-
 export const googleUrl = server + "/auth/login-google";
 export const githubUrl = server + "/auth/login-github";
 export const signUpURL = server + "/auth/signup";

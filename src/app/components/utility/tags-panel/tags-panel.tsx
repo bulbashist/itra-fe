@@ -5,20 +5,22 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { CSSGap, CSSMargin } from "../../../../../../styles/constants";
-import { useAppSelector } from "../../../../../../hooks";
-import { ITag } from "../../../../../../types";
+import { CSSGap, CSSMargin } from "app/styles/constants";
+import { ITag } from "app/types";
 import axios from "axios";
-import { tagsURL } from "../../../../../../constants/urls";
+import { tagsURL } from "app/constants/urls";
 
 type Props = {
   tags: ITag[];
   setTags: Dispatch<SetStateAction<ITag[]>>;
+  compositionTag: ITag;
 };
 
-export const TagsPanelComponent = ({ tags, setTags }: Props) => {
-  const composition = useAppSelector((state) => state.composition);
-
+export const TagsPanelComponent = ({
+  tags,
+  setTags,
+  compositionTag,
+}: Props) => {
   const [hints, setHints] = useState<ITag[]>([]);
 
   useEffect(() => {
@@ -28,13 +30,11 @@ export const TagsPanelComponent = ({ tags, setTags }: Props) => {
       .catch(console.error);
   }, []);
 
-  if (!composition) return null;
-
-  const tagSelectionHandler = (_: unknown, value: string | null) => {
+  const tagSelectionHandler = (_: any, value: string | null) => {
     if (value) {
       const hint = hints.find((hint) => hint.name === value)!;
       if (
-        hint.id !== composition.tag.id &&
+        hint.id !== compositionTag.id &&
         !tags.find((tag) => tag.id === hint.id)
       ) {
         setTags((ps) => [...ps, hint]);
@@ -50,9 +50,9 @@ export const TagsPanelComponent = ({ tags, setTags }: Props) => {
       alignItems="center"
     >
       <Stack direction="row" gap={CSSGap.Small} flexWrap="wrap">
-        <Button variant="outlined" color="warning" key={composition.tag.id}>
+        <Button variant="outlined" color="warning" key={compositionTag.id}>
           <Typography marginRight={CSSMargin.Tiny}>
-            {composition.tag.name}
+            {compositionTag.name}
           </Typography>
         </Button>
         {tags.map((tag) => (

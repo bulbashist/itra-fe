@@ -1,24 +1,13 @@
-import {
-  Avatar,
-  Box,
-  Container,
-  Input,
-  List,
-  ListItem,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { IComment } from "../../../../types";
-import { CSSMargin, CSSPadding } from "../../../../styles/constants";
-import { DeleteForever, EditNote, Send } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { Avatar, Box, List, ListItem, Stack, Typography } from "@mui/material";
+import { IComment } from "app/types";
+import { CSSBorder, CSSMargin, CSSPadding } from "../../../../styles/constants";
+import DeleteForever from "@mui/icons-material/DeleteForever";
+import { useEffect } from "react";
 import { connection } from "./services/ws-connection";
-import { WSEvents } from "./services/types";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
 import { useAppSelector } from "../../../../hooks";
 import CommentInputComponent from "./components/input";
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   comments: IComment[];
@@ -27,8 +16,7 @@ type Props = {
 export const CommentBlockComponent = ({ comments }: Props) => {
   const { id: reviewId } = useParams();
   const { id: userId, isAdmin } = useAppSelector((state) => state.core);
-
-  const [text, setText] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     connection.connect("ws://localhost:4000");
@@ -37,9 +25,9 @@ export const CommentBlockComponent = ({ comments }: Props) => {
   }, []);
 
   return (
-    <Box padding="20px 20px">
-      <Typography align="left" borderBottom={1}>
-        Комментарии
+    <Box padding={CSSPadding.Average}>
+      <Typography align="left" borderBottom={CSSBorder.Tiny}>
+        {t("word_comments")}
       </Typography>
       <List>
         {comments.map((comment) => (
@@ -59,14 +47,11 @@ export const CommentBlockComponent = ({ comments }: Props) => {
               {comment.text}
             </Typography>
             {userId === comment.author.id || isAdmin ? (
-              <DeleteForever
-                sx={{
-                  position: "absolute",
-                  right: CSSPadding.Tiny * 8,
-                  top: CSSPadding.Tiny * 8,
-                }}
-                onClick={() => connection.deleteComment(comment.id)}
-              />
+              <Box position="absolute" top={8} right={8}>
+                <DeleteForever
+                  onClick={() => connection.deleteComment(comment.id)}
+                />
+              </Box>
             ) : null}
           </Stack>
         ))}

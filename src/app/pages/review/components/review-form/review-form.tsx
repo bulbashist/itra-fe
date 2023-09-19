@@ -1,21 +1,25 @@
-import { Button, Dialog, DialogTitle, Grid, Input, Stack } from "@mui/material";
-import { useState, useRef } from "react";
-import { FileUploader } from "react-drag-drop-files";
-import { useForm } from "react-hook-form";
-
-import { CSSGap, CSSPadding } from "../../../../styles/constants";
-import { useAppDispatch, useAppSelector } from "../../../../hooks";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import Input from "@mui/material/Input";
+import Stack from "@mui/material/Stack";
 import Close from "@mui/icons-material/Close";
-import { ITag } from "../../../../types";
-import { ImageServer } from "./image-server";
-//@ts-ignore
-import { changeReview, setEditingState, uploadReview } from "../../store/slice";
-import { GalleryComponent } from "./components/gallery/gallery";
 
-import styles from "./styles.module.css";
-import TagsPanelComponent from "./components/tags-panel";
-import { Theme } from "../../../../themes/types";
+import { FileUploader } from "react-drag-drop-files";
+import { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+
+import GalleryComponent from "app/components/utility/review-form-gallery";
+import TagsPanelComponent from "app/components/utility/tags-panel";
+import { CSSGap, CSSPadding } from "app/styles/constants";
+import { ITag } from "app/types";
+import { Theme } from "app/themes/types";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+
+import { ImageServer } from "./image-server";
+import { changeReview, setEditingState } from "../../store/slice";
 
 type FormData = {
   title: string;
@@ -23,10 +27,11 @@ type FormData = {
 };
 
 type Props = {
-  closeModal: () => void;
+  isOpen: boolean;
+  close: () => void;
 };
 
-export const ReviewFormComponent = ({ closeModal }: Props) => {
+export const ReviewFormComponent = ({ isOpen, close }: Props) => {
   const theme = useAppSelector((state) => state.core.theme);
   const review = useAppSelector((state) => state.review.review);
 
@@ -48,15 +53,14 @@ export const ReviewFormComponent = ({ closeModal }: Props) => {
 
   const formHandler = (data: FormData) => {
     dispatch(changeReview({ id: review.id, ...data, tags }));
-    closeModal();
+    close();
   };
 
   return (
-    <Dialog open fullWidth={true} maxWidth={false}>
-      <Close
-        className={styles.closeBtn}
-        onClick={() => dispatch(setEditingState(false))}
-      />
+    <Dialog open={isOpen} fullWidth={true} maxWidth={false}>
+      <Box position="absolute" top={8} right={8}>
+        <Close onClick={() => dispatch(setEditingState(false))} />
+      </Box>
       <DialogTitle textAlign="center">
         {t("review_update_form_title")}
       </DialogTitle>
@@ -84,7 +88,11 @@ export const ReviewFormComponent = ({ closeModal }: Props) => {
               placeholder={t("review_form_text_ph")}
               {...register("text")}
             />
-            <TagsPanelComponent tags={tags} setTags={setTags} />
+            <TagsPanelComponent
+              tags={tags}
+              setTags={setTags}
+              compositionTag={review.composition.tag}
+            />
             <Button type="submit" sx={{ alignSelf: "end" }}>
               {t("word_submit")}
             </Button>

@@ -1,12 +1,12 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IComposition } from "../../../types";
 import axios from "axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { IComposition } from "app/types";
+import { CreateReviewDto } from "../types";
 import {
   compositionRatingsURL,
   compositionsURL,
   reviewsURL,
-} from "../../../constants/urls";
-import { CreateReviewDto } from "../types";
+} from "app/constants/urls";
 
 type State = IComposition | null;
 
