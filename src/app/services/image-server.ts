@@ -1,17 +1,17 @@
 import axios from "axios";
-import { imgUploadURL } from "../../../../constants/urls";
+import { imgUploadURL } from "app/constants/urls";
 
 export class ImageServer {
   public async uploadImage(file: File) {
-    // console.log(files);
     const base64Data = await this.readFile(file);
+    const authKey = process.env.REACT_APP_IMGUR_CLIENT_ID ?? "b5d0a008cf519a1";
 
     const response = await axios.post(
       imgUploadURL,
       { image: base64Data },
       {
         headers: {
-          Authorization: "Client-ID b5d0a008cf519a1",
+          Authorization: `Client-ID ${authKey}`,
         },
       }
     );

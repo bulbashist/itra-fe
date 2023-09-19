@@ -1,9 +1,8 @@
 import Stack from "@mui/material/Stack";
-
+import PageWrapperComponent from "app/components/page-wrapper";
+import { CSSGap, CSSPadding } from "app/styles/constants";
 import FilterPanelComponent from "./components/filter-panel";
 import ReviewsListComponent from "./components/reviews-list";
-import { CSSGap, CSSPadding } from "../../styles/constants";
-import PageWrapperComponent from "../../components/page-wrapper";
 
 export const MainPage = () => {
   return (

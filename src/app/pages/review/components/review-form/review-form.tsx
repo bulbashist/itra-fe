@@ -18,7 +18,7 @@ import { ITag } from "app/types";
 import { Theme } from "app/themes/types";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 
-import { ImageServer } from "./image-server";
+import { ImageServer } from "app/services/image-server";
 import { changeReview, setEditingState } from "../../store/slice";
 
 type FormData = {

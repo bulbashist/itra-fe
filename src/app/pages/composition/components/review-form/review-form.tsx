@@ -6,21 +6,18 @@ import Grid from "@mui/material/Grid";
 import Input from "@mui/material/Input";
 import Stack from "@mui/material/Stack";
 import Close from "@mui/icons-material/Close";
-
 import { useState, useRef } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-
 import GalleryComponent from "app/components/utility/review-form-gallery";
+import TagsPanelComponent from "app/components/utility/tags-panel";
 import { CSSGap, CSSPadding } from "app/styles/constants";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { ITag } from "app/types";
 import { Theme } from "app/themes/types";
-
-import TagsPanelComponent from "app/components/utility/tags-panel";
+import { ImageServer } from "app/services/image-server";
 import { uploadReview } from "../../store/slice";
-import { ImageServer } from "./image-server";
 
 type FormData = {
   title: string;

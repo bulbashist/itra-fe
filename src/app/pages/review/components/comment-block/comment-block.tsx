@@ -1,11 +1,11 @@
 import { Avatar, Box, List, ListItem, Stack, Typography } from "@mui/material";
 import { IComment } from "app/types";
-import { CSSBorder, CSSMargin, CSSPadding } from "../../../../styles/constants";
+import { CSSBorder, CSSMargin, CSSPadding } from "app/styles/constants";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import { useEffect } from "react";
 import { connection } from "./services/ws-connection";
 import { useParams } from "react-router";
-import { useAppSelector } from "../../../../hooks";
+import { useAppSelector } from "app/hooks";
 import CommentInputComponent from "./components/input";
 import { useTranslation } from "react-i18next";
 
@@ -19,7 +19,7 @@ export const CommentBlockComponent = ({ comments }: Props) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    connection.connect("ws://localhost:4000");
+    connection.connect(process.env.REACT_APP_WS_SERVER!);
 
     return () => connection.close();
   }, []);

@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { addTag, deleteTag } from "app/store/core-reducer";
 import Cancel from "@mui/icons-material/Cancel";
 import { ITag } from "app/types";
-import { CSSMargin } from "app/styles/constants";
+import { CSSMargin, FontSize } from "app/styles/constants";
 import { TagCloud } from "react-tagcloud";
 import { tagsURL } from "app/constants/urls";
 
@@ -43,7 +43,9 @@ export const TagsPanelComponent = () => {
           sx={{ margin: CSSMargin.Tiny }}
         >
           <Stack direction="row" flexWrap="wrap">
-            <Typography marginRight={CSSMargin.Tiny}>{currTag.name}</Typography>
+            <Typography marginRight={CSSMargin.Tiny} fontSize={FontSize.Small}>
+              {currTag.name}
+            </Typography>
             <Cancel onClick={() => dispatch(deleteTag(currTag.id))} />
           </Stack>
         </Button>
