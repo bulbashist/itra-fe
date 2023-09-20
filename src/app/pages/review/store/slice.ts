@@ -12,11 +12,13 @@ import { IReview } from "../types";
 type State = {
   review: null | IReview;
   isBeingEdited: boolean;
+  loading: boolean;
 };
 
 const initialState: State = {
   review: null,
   isBeingEdited: false,
+  loading: false,
 };
 
 const slice = createSlice({
@@ -38,8 +40,15 @@ const slice = createSlice({
   },
   extraReducers: (builder) =>
     builder
+      .addCase(getReview.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getReview.rejected, (state) => {
+        state.loading = false;
+      })
       .addCase(getReview.fulfilled, (state, action) => {
         state.review = action.payload;
+        state.loading = false;
       })
       .addCase(changeReview.fulfilled, (state, action) => {
         state.review = { ...state.review, ...action.payload };

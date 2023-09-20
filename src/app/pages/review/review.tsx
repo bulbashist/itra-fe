@@ -9,7 +9,9 @@ import { getReview, setEditingState } from "./store/slice";
 
 export const ReviewPage = () => {
   const dispatch = useAppDispatch();
-  const { isBeingEdited, review } = useAppSelector((state) => state.review);
+  const { isBeingEdited, review, loading } = useAppSelector(
+    (state) => state.review
+  );
   const { id } = useParams();
 
   useEffect(() => {
@@ -18,7 +20,7 @@ export const ReviewPage = () => {
     }
   }, [dispatch, id]);
 
-  if (!review) return <NoPage />;
+  if (!review || loading) return <NoPage />;
 
   return (
     <PageWrapperComponent>

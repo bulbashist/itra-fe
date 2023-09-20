@@ -7,7 +7,7 @@ import {
   logInURL,
   signUpURL,
 } from "../../../../constants/urls";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch } from "../../../../hooks";
 import { getUserData } from "../../../../store/core-reducer";
 import { CSSGap, CSSPadding } from "../../../../styles/constants";

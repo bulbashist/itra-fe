@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const mode = useAppSelector((state) => state.core.theme);
+  const theme = useAppSelector((state) => state.core.theme);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <ThemeProvider theme={themes[mode]}>
+    <ThemeProvider theme={themes[theme]}>
       <div className="App">
         <RouterProvider router={router} />
       </div>
