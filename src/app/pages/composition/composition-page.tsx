@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import PageWrapperComponent from "app/components/page-wrapper";
-import { useAppDispatch } from "app/hooks";
+import AddReviewForm from "app/components/utility/add-review-form";
+import NoPage from "app/pages/404";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import CompositionBlockComponent from "./components/composition-block";
-import ReviewFormComponent from "./components/review-form";
 import { getComposition } from "./store/slice";
 
 export const CompositionPage = () => {
+  const composition = useAppSelector((state) => state.composition);
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -17,11 +19,19 @@ export const CompositionPage = () => {
     }
   }, [id, dispatch]);
 
+  if (!composition) return <NoPage />;
+
   return (
     <PageWrapperComponent>
-      <CompositionBlockComponent openModal={() => setIsOpen(true)} />
-      {isOpen ? (
-        <ReviewFormComponent closeModal={() => setIsOpen(false)} />
+      <CompositionBlockComponent
+        composition={composition}
+        openModal={() => setIsOpen(true)}
+      />
+      {isOpen && composition ? (
+        <AddReviewForm
+          composition={composition}
+          closeModal={() => setIsOpen(false)}
+        />
       ) : null}
     </PageWrapperComponent>
   );

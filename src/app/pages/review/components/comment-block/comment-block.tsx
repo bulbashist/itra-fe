@@ -43,9 +43,11 @@ export const CommentBlockComponent = ({ comments }: Props) => {
                 </Typography>
               </List>
             </ListItem>
-            <Typography align="left" sx={{ marginLeft: CSSMargin.Large }}>
-              {comment.text}
-            </Typography>
+            <Box sx={{ overflowX: "auto" }}>
+              <Typography align="left" sx={{ marginLeft: CSSMargin.Large }}>
+                {comment.text}
+              </Typography>
+            </Box>
             {userId === comment.author.id || isAdmin ? (
               <Box position="absolute" top={8} right={8}>
                 <DeleteForever

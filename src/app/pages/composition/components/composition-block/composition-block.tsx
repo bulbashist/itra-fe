@@ -6,18 +6,20 @@ import { Link } from "react-router-dom";
 import { Rating5 } from "../../../../components/rating";
 import { changeRating } from "../../store/slice";
 import { useTranslation } from "react-i18next";
+import { IComposition } from "app/types";
 
 type Props = {
+  composition: IComposition;
   openModal: () => void;
 };
 
-export const CompositionBlockComponent = ({ openModal }: Props) => {
+export const CompositionBlockComponent = ({
+  composition,
+  openModal,
+}: Props) => {
   const userId = useAppSelector((state) => state.core.id);
-  const composition = useAppSelector((state) => state.composition);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
-  if (!composition) return <div>Not Found</div>;
 
   return (
     <Box margin={CSSMargin.Decent}>

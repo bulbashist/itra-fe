@@ -8,4 +8,8 @@ export type CreateReviewDto = {
   title: string;
   text: string;
   tags: ITag[];
+
+  user?: {
+    id: number;
+  };
 };

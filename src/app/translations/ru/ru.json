@@ -3,6 +3,7 @@
     "word_author": "Автор",
     "word_rating": "Рейтинг",
     "word_submit": "Подтвердить",
+    "word_comments": "Комментарии",
 
     "header_project_name": "Финальный проект",
     "header_search_placeholder": "Поиск по сайту",
@@ -34,6 +35,7 @@
     "admin_delete": "Удалить",
     "admin_admin": "Админ",
 
+    "user_create_review": "Создать отзыв",
     "user_reviews_table_review": "Отзыв",
     "user_reviews_table_composition": "Произведение",
     "user_reviews_table_avg_rating": "Средний рейтинг",

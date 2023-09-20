@@ -1,23 +1,25 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import Grid from "@mui/material/Grid";
-import Input from "@mui/material/Input";
-import Stack from "@mui/material/Stack";
-import Close from "@mui/icons-material/Close";
-import { useState, useRef } from "react";
+import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  Grid,
+  Input,
+  Stack,
+} from "@mui/material";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { uploadReview } from "app/pages/composition/store/slice";
+import { CSSGap, CSSPadding } from "app/styles/constants";
+import { IComposition, ITag } from "app/types";
+import { useRef, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import GalleryComponent from "app/components/utility/review-form-gallery";
-import TagsPanelComponent from "app/components/utility/tags-panel";
-import { CSSGap, CSSPadding } from "app/styles/constants";
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import { ITag } from "app/types";
+import TagsPanelComponent from "../tags-panel";
 import { Theme } from "app/themes/types";
+import GalleryComponent from "../review-form-gallery";
 import { ImageServer } from "app/services/image-server";
-import { uploadReview } from "../../store/slice";
 
 type FormData = {
   title: string;
@@ -25,12 +27,13 @@ type FormData = {
 };
 
 type Props = {
+  composition: IComposition;
+  userId?: number;
   closeModal: () => void;
 };
 
-export const ReviewFormComponent = ({ closeModal }: Props) => {
+export const AddReviewForm = ({ composition, userId, closeModal }: Props) => {
   const theme = useAppSelector((state) => state.core.theme);
-  const composition = useAppSelector((state) => state.composition);
 
   const [previewImg, setPreviewImg] = useState("");
   const [tags, setTags] = useState<ITag[]>([]);
@@ -56,14 +59,15 @@ export const ReviewFormComponent = ({ closeModal }: Props) => {
   };
 
   const formHandler = (data: FormData) => {
-    dispatch(
-      uploadReview({
-        composition: { id: composition.id },
-        ...data,
-        previewImg,
-        tags,
-      })
-    );
+    const review = {
+      composition: { id: composition.id },
+      ...data,
+      previewImg,
+      tags,
+      ...(userId && { user: { id: userId } }),
+    };
+
+    dispatch(uploadReview(review));
     closeModal();
   };
 
