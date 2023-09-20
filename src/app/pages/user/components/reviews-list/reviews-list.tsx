@@ -6,7 +6,7 @@ import { Rating10 } from "../../../../components/rating";
 import { Box } from "@mui/material";
 
 export const ReviewsListComponent = () => {
-  const reviews = useAppSelector((state) => state.user?.reviews);
+  const reviews = useAppSelector((state) => state.user.data?.reviews);
   const { t } = useTranslation();
 
   if (!reviews) return null;
@@ -22,7 +22,7 @@ export const ReviewsListComponent = () => {
     {
       field: "title",
       headerName: t("user_reviews_table_review"),
-      minWidth: 100,
+      minWidth: 150,
       flex: 1,
       headerAlign: "center",
       align: "center",
@@ -35,7 +35,7 @@ export const ReviewsListComponent = () => {
       field: "name",
       headerAlign: "center",
       headerName: t("user_reviews_table_composition"),
-      minWidth: 100,
+      minWidth: 150,
       flex: 1,
       align: "center",
       renderCell: (params) => {

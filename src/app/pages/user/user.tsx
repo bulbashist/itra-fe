@@ -11,10 +11,11 @@ import ReviewsListComponent from "./components/reviews-list";
 import ReviewFormWrapper from "./components/review-form-wrapper";
 import AdminPanel from "./components/admin-panel";
 import { getUserData } from "./store/slice";
+import styles from "app/styles/animations.module.css";
 
 export const UserPage = () => {
   const isAdmin = useAppSelector((state) => state.core.isAdmin);
-  const user = useAppSelector((state) => state.user);
+  const { data, loading } = useAppSelector((state) => state.user);
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
@@ -24,7 +25,8 @@ export const UserPage = () => {
     dispatch(getUserData(+id!));
   }, [id, dispatch]);
 
-  if (!user) return <NoPage />;
+  if (loading) return <div className={styles.loading} />;
+  if (!data) return <NoPage />;
 
   return (
     <PageWrapperComponent>
@@ -46,12 +48,12 @@ export const UserPage = () => {
           ) : null}
           <Stack direction="row">
             <Typography variant="h5" marginRight={CSSMargin.Average}>
-              {user.name}
+              {data.name}
             </Typography>
-            {user.likes ? (
+            {data.likes ? (
               <>
                 <Typography fontSize={FontSize.Large}>
-                  {user.likes}
+                  {data.likes}
                   <ThumbUp
                     color="success"
                     sx={{ position: "relative", top: 3 }}
@@ -67,7 +69,7 @@ export const UserPage = () => {
           <ReviewFormWrapper
             closeModal={() => setModal(false)}
             compId={compId}
-            userId={user.id}
+            userId={data.id}
           />
         ) : null}
       </Stack>

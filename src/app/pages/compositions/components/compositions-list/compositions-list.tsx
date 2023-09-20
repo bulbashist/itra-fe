@@ -8,15 +8,16 @@ import {
   CSSMargin,
   CSSPadding,
   FontWeight,
-} from "../../../../styles/constants";
-import TagButtonComponent from "../../../../components/tag-button";
-import { Link } from "react-router-dom";
+} from "app/styles/constants";
+import TagButtonComponent from "app/components/tag-button";
+import { useNavigate } from "react-router-dom";
 import { Rating5 } from "../../../../components/rating";
 import { useTranslation } from "react-i18next";
 
 export const CompositionsListComponent = () => {
   const [compositions, setCompositions] = useState<IComposition[]>([]);
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -31,47 +32,44 @@ export const CompositionsListComponent = () => {
       <Grid container gap={CSSGap.Decent} columns={13}>
         {compositions.map((composition) => (
           <Grid item key={composition.id} xs={12} sm={6} lg={4}>
-            <Link to={`/compositions/${composition.id}`}>
-              <Card
-                sx={{
-                  height: "200px",
-                  padding: CSSPadding.Tiny,
-                  position: "relative",
-                }}
-                raised
+            <Card
+              sx={{
+                height: "200px",
+                padding: CSSPadding.Tiny,
+                position: "relative",
+              }}
+              raised
+              onClick={() => navigate(`/compositions/${composition.id}`)}
+            >
+              <Typography
+                variant="h6"
+                fontWeight={FontWeight.Bold}
+                marginBottom={CSSMargin.Small}
               >
-                <Typography
-                  variant="h6"
-                  fontWeight={FontWeight.Bold}
-                  marginBottom={CSSMargin.Small}
-                >
-                  {composition.name}
+                {composition.name}
+              </Typography>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography textAlign="left">
+                  {t("word_author")}: {composition.author}
                 </Typography>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography textAlign="left">
-                    {t("word_author")}: {composition.author}
-                  </Typography>
-                  <Box sx={{ float: "right" }}>
-                    <Typography textAlign="right">
-                      {t("word_rating")}:
-                    </Typography>
-                    <Rating5 value={composition.avgRating} />
-                  </Box>
-                </Stack>
+                <Box sx={{ float: "right" }}>
+                  <Typography textAlign="right">{t("word_rating")}:</Typography>
+                  <Rating5 value={composition.avgRating} />
+                </Box>
+              </Stack>
 
-                <Stack
-                  direction="row"
-                  gap={CSSGap.Tiny}
-                  sx={{
-                    position: "absolute",
-                    bottom: CSSPadding.Tiny * 8,
-                    right: CSSPadding.Tiny * 8,
-                  }}
-                >
-                  <TagButtonComponent tag={composition.tag} />
-                </Stack>
-              </Card>
-            </Link>
+              <Stack
+                direction="row"
+                gap={CSSGap.Tiny}
+                sx={{
+                  position: "absolute",
+                  bottom: CSSPadding.Tiny * 8,
+                  right: CSSPadding.Tiny * 8,
+                }}
+              >
+                <TagButtonComponent tag={composition.tag} />
+              </Stack>
+            </Card>
           </Grid>
         ))}
       </Grid>

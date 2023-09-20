@@ -22,6 +22,7 @@ export const TagButtonComponent = ({ tag }: Props) => {
       onClick={(e) => {
         dispatch(addTag(tag));
         navigate("/");
+        window.scroll(0, 0);
         e.stopPropagation();
       }}
     >

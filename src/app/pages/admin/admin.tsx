@@ -6,24 +6,22 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteForever from "@mui/icons-material/DeleteForever";
-
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
 import PageWrapperComponent from "app/components/page-wrapper";
 import NoPage from "app/pages/404";
 import { IUser } from "app/types";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { CSSBorder, CSSPadding } from "app/styles/constants";
-
 import AdminCellComponent from "./components/admin-cell";
 import BlockCellComponent from "./components/block-cell";
 import { deleteUser, getUsers } from "./store/slice";
+import styles from "app/styles/animations.module.css";
 
 export const AdminPage = () => {
   const isAdmin = useAppSelector((state) => state.core.isAdmin);
-  const users = useAppSelector((state) => state.admin);
+  const { loading, users } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -33,6 +31,7 @@ export const AdminPage = () => {
     }
   }, [dispatch, isAdmin]);
 
+  if (loading) return <div className={styles.loading} />;
   if (!isAdmin) return <NoPage />;
 
   return (

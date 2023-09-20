@@ -8,9 +8,15 @@ import {
   reviewsURL,
 } from "app/constants/urls";
 
-type State = IComposition | null;
+type State = {
+  data: IComposition | null;
+  loading: boolean;
+};
 
-const initialState: State = null;
+const initialState: State = {
+  data: null,
+  loading: false,
+};
 
 const getComposition = createAsyncThunk(
   "getComposition",
@@ -54,9 +60,19 @@ const slice = createSlice<State, any, any>({
   reducers: {},
   extraReducers: (builder) =>
     builder
-      .addCase(getComposition.fulfilled, (_, action) => action.payload)
+      .addCase(getComposition.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getComposition.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(getComposition.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loading = false;
+      })
       .addCase(changeRating.fulfilled, (state, action) => {
-        state!.userRating = action.payload;
+        state.data!.userRating = action.payload;
+        state.loading = false;
       }),
 });
 

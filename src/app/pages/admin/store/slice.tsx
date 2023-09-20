@@ -9,6 +9,16 @@ type ThunkArgs = {
   dto: ChangeIUserDTO;
 };
 
+type State = {
+  users: IUser[];
+  loading: boolean;
+};
+
+const initialState: State = {
+  users: [],
+  loading: false,
+};
+
 const getUsers = createAsyncThunk("get-users", async () => {
   const response = await axios.get(usersURL, { withCredentials: true });
   return response.data;
@@ -31,20 +41,29 @@ const deleteUser = createAsyncThunk("delete-user", async (id: number) => {
 
 const slice = createSlice({
   name: "admin",
-  initialState: [] as IUser[],
+  initialState,
   reducers: {},
   extraReducers: (builder) =>
     builder
-      .addCase(getUsers.fulfilled, (state, action) => action.payload)
+      .addCase(getUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUsers.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(getUsers.fulfilled, (state, action) => {
+        state.users = action.payload;
+        state.loading = false;
+      })
       .addCase(changeUser.fulfilled, (state, action) => {
-        return state.map((user) => {
+        state.users = state.users.map((user) => {
           if (user.id === action.payload.id) {
             return { ...user, ...action.payload };
           } else return user;
         });
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
-        return state.filter((user) => user.id !== action.payload);
+        state.users = state.users.filter((user) => user.id !== action.payload);
       }),
 });
 

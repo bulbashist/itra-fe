@@ -6,9 +6,10 @@ import NoPage from "app/pages/404";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import CompositionBlockComponent from "./components/composition-block";
 import { getComposition } from "./store/slice";
+import styles from "app/styles/animations.module.css";
 
 export const CompositionPage = () => {
-  const composition = useAppSelector((state) => state.composition);
+  const { data, loading } = useAppSelector((state) => state.composition);
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -19,19 +20,17 @@ export const CompositionPage = () => {
     }
   }, [id, dispatch]);
 
-  if (!composition) return <NoPage />;
+  if (loading) return <div className={styles.loading} />;
+  if (!data) return <NoPage />;
 
   return (
     <PageWrapperComponent>
       <CompositionBlockComponent
-        composition={composition}
+        composition={data}
         openModal={() => setIsOpen(true)}
       />
-      {isOpen && composition ? (
-        <AddReviewForm
-          composition={composition}
-          closeModal={() => setIsOpen(false)}
-        />
+      {isOpen && data ? (
+        <AddReviewForm composition={data} closeModal={() => setIsOpen(false)} />
       ) : null}
     </PageWrapperComponent>
   );
