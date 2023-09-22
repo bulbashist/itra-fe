@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import ReviewFormComponent from "./components/review-form";
 import ReviewCardComponent from "./components/review-card";
 import { getReview, setEditingState } from "./store/slice";
+import styles from "app/styles/animations.module.css";
 
 export const ReviewPage = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,8 @@ export const ReviewPage = () => {
     }
   }, [dispatch, id]);
 
-  if (!review || loading) return <NoPage />;
+  if (loading) return <div className={styles.loading} />;
+  if (!review) return <NoPage />;
 
   return (
     <PageWrapperComponent>

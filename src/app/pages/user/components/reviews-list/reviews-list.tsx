@@ -59,7 +59,12 @@ export const ReviewsListComponent = () => {
 
   return (
     <Box sx={{ overflow: "auto" }}>
-      <DataGrid columns={fields} rows={reviews} hideFooter />
+      <DataGrid
+        columns={fields}
+        rows={reviews}
+        hideFooter
+        sx={{ minHeight: 100 }}
+      />
     </Box>
   );
 };
