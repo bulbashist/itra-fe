@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useAppDispatch } from "../../../../hooks";
 import { getUserData } from "../../../../store/core-reducer";
 import { CSSGap, CSSPadding } from "../../../../styles/constants";
+import bcrypt from "bcryptjs";
 
 type Props = {
   isOpen: boolean;
@@ -25,13 +26,14 @@ export const AuthModalComponent = ({ isOpen, closeModal }: Props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const authorize = (url: string) => {
+  const authorize = async (url: string) => {
+    const hash = await bcrypt.hash(password, "$2a$10$jbODcXj6GS/Bc5rtxKmqne");
     axios
       .post(
         url,
         {
           login,
-          password,
+          password: hash,
         },
         { withCredentials: true }
       )
