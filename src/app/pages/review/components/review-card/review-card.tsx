@@ -35,7 +35,7 @@ export const ReviewCardComponent = ({ review }: Props) => {
 
   const download = () => {
     if (ref.current) {
-      const file = new pdf({ format: "a1" });
+      const file = new pdf({ format: "a0" });
       htc(ref.current, { allowTaint: true, useCORS: true }).then((data) => {
         const pages = Math.ceil(
           data.height / file.internal.pageSize.getHeight()
@@ -83,26 +83,22 @@ export const ReviewCardComponent = ({ review }: Props) => {
   return (
     <div ref={ref}>
       <Card sx={{ padding: CSSPadding.Decent, position: "relative" }}>
-        <Stack
-          direction="row"
-          position="absolute"
-          right={CSSPadding.Tiny * 8}
-          top={CSSPadding.Tiny * 8}
-        >
-          {userId === review.author.id || isAdmin ? (
-            <>
-              <EditNote onClick={() => dispatch(setEditingState(true))} />
-              <DeleteForever
-                onClick={() => {
-                  dispatch(deleteReview(review.id));
-                  navigate("/");
-                }}
-              />
-            </>
-          ) : null}
-          <Download onClick={download} />
-        </Stack>
-
+        <Box position="absolute" top={8} right={8}>
+          <Stack direction="row">
+            {userId === review.author.id || isAdmin ? (
+              <>
+                <EditNote onClick={() => dispatch(setEditingState(true))} />
+                <DeleteForever
+                  onClick={() => {
+                    dispatch(deleteReview(review.id));
+                    navigate("/");
+                  }}
+                />
+              </>
+            ) : null}
+            <Download onClick={download} />
+          </Stack>
+        </Box>
         <Typography variant="h4">{review.title}</Typography>
         <Stack
           direction="row"
