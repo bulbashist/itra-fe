@@ -18,6 +18,7 @@
     "login_signout": "Sign out",
     "login_popup_email": "Email",
     "login_popup_password": "Password",
+    "login_popup_name": "Name *optional",
     "login_popup_socials": "Login via socials:",
     "login_popup_google": "Log in with Google",
     "login_popup_github": "Log in with Github",

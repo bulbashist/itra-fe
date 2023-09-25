@@ -50,6 +50,7 @@ export const UserPage = () => {
             <Typography variant="h5" marginRight={CSSMargin.Average}>
               {data.name}
             </Typography>
+
             {data.likes ? (
               <>
                 <Typography fontSize={FontSize.Large}>

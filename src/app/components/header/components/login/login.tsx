@@ -1,17 +1,17 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AuthModalComponent } from "./modal";
-import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import { Link } from "react-router-dom";
-import { signOut } from "../../../../store/core-reducer";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { signOut } from "app/store/core-reducer";
+import { AuthModalComponent } from "./auth-modal";
 
 export const LoginComponent = () => {
   const { id, name: username } = useAppSelector((state) => state.core);
   const dispatch = useAppDispatch();
-  const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
 
+  const [modal, setModal] = useState<JSX.Element | null>(null);
   const [isDropBox, setIsDropbox] = useState(false);
 
   if (username)
@@ -45,12 +45,14 @@ export const LoginComponent = () => {
     <>
       <Button
         variant="outlined"
-        onClick={() => setIsOpen(true)}
+        onClick={() =>
+          setModal(<AuthModalComponent setModal={(elem) => setModal(elem)} />)
+        }
         sx={{ maxHeight: "36.5px" }}
       >
         {t("login_button")}
       </Button>
-      <AuthModalComponent isOpen={isOpen} closeModal={() => setIsOpen(false)} />
+      {modal}
     </>
   );
 };

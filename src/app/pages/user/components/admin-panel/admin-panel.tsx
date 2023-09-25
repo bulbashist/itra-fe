@@ -19,7 +19,7 @@ export const AdminPanel = ({ compId, setCompId, setModal }: Props) => {
       .get(compositionsURL + "hints")
       .then((resp) => setHints(resp.data))
       .catch(console.error);
-  });
+  }, []);
 
   return (
     <Box>

@@ -18,6 +18,7 @@
     "login_signout": "Выйти",
     "login_popup_email": "Почта",
     "login_popup_password": "Пароль",
+    "login_popup_name": "Имя *опционально",
     "login_popup_socials": "Войти через соцсети:",
     "login_popup_google": "Войти с помощью Google",
     "login_popup_github": "Войти с помощью Github",
